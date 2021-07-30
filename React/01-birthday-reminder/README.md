@@ -6,10 +6,10 @@
 
 ### `very basic React Components`
 
--- Components
--- passing down props
+- Components
+- passing down props
 
 ### `Advanced Array Methods`
 
--- mapping an array
--- destructuring
+- mapping an array
+- destructuring

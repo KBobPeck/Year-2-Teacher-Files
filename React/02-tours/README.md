@@ -6,7 +6,6 @@
 
 - Components
 - passing down props
-- useEffect
 
 ### `Advanced Array Methods`
 
@@ -16,7 +15,8 @@
 ### `Fetching Data from an API`
 
 - Async / Await
-- distributing json recieved
+- distributing json received
+- useEffect
 
 ### `Basic Error Handling`
 
