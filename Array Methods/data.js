@@ -8001,42 +8001,43 @@ const people = [
   },
 ];
 
-const colors = ['red', 'black', 'white', 'blue', 'purple', 'orange', 'green', 'yellow']
+const colors = [
+  "red",
+  "black",
+  "white",
+  "blue",
+  "purple",
+  "orange",
+  "green",
+  "yellow",
+];
 
 const drinks = [
-  'Soda',
-  'Coffee',
-  'Lemonade',
-  'Iced tea',
-  'Juice',
-  'Milkshake',
-  'Water',
-  'Milk',
-  'Beer',
-  'Martini',
-  'Margarita',
-  'Wine',
-  'Daiquari',
-]
+  "Soda",
+  "Coffee",
+  "Lemonade",
+  "Iced tea",
+  "Juice",
+  "Milkshake",
+  "Water",
+  "Milk",
+  "Beer",
+  "Martini",
+  "Margarita",
+  "Wine",
+  "Daiquari",
+];
 const jobs = [
-  'Fitness Worker',
-  'IT Specialist',
-  'Loan Officer',
-  'Historian',
-  'Photographer',
-  'Bus Driver',
-  'Farmer',
-  'Automotive mechanic',
-  'Janitor',
-  'Cashier'
-]
+  "Fitness Worker",
+  "IT Specialist",
+  "Loan Officer",
+  "Historian",
+  "Photographer",
+  "Bus Driver",
+  "Farmer",
+  "Automotive mechanic",
+  "Janitor",
+  "Cashier",
+];
 
-const pets = [
-  'snake', 
-  'dog',
-  'cat',
-  'fish',
-  'lizard',
-  'bird',
-  'rabbit',
-]
+const pets = ["snake", "dog", "cat", "fish", "lizard", "bird", "rabbit"];
