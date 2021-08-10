@@ -1,54 +1,94 @@
-let highestSeatID = 1
-let takenSeats = [];
-let cols = []
-let rows = []
+let max = 0;
+let min = 1027;
+let dugHoles = [];
+let cols = [];
+let rows = [];
 
-for (seat of input) {
+for (holes of input) {
   let rmax = 127;
   let rmin = 0;
-
   let cmax = 7;
   let cmin = 0;
 
-  for (letter of seat) {
-    if (letter === "F") rmax = Math.floor((rmax + rmin) / 2);
-    if (letter === "B") rmin = Math.ceil((rmax + rmin) / 2);
-
-    if (letter === "L") cmax = Math.floor((cmax + cmin) / 2);
-    if (letter === "R") cmin = Math.ceil((cmax + cmin) / 2);
+  for (letter of holes) {
+    if (letter == "F") rmax = Math.floor((rmax + rmin) / 2);
+    if (letter == "B") rmin = Math.ceil((rmax + rmin) / 2);
+    if (letter == "L") cmax = Math.floor((cmax + cmin) / 2);
+    if (letter == "R") cmin = Math.ceil((cmax + cmin) / 2);
   }
+  const sqNum = rmax * 8 + cmax;
+  rows.push(rmax);
+  cols.push(cmax);
+  dugHoles.push(sqNum);
+  if (sqNum > max) max = sqNum;
+  if (sqNum < min) min = sqNum;
+}
+console.log(max, min);
 
-  cols.push(cmax)
-  rows.push(rmax)
-  const seatID = rmax * 8 + cmax;
-
-
-  if(seatID > highestSeatID) highestSeatID = seatID
-  takenSeats.push(seatID);
+let missingSquare;
+for (let i = min; i <= max; i++) {
+  if (dugHoles.some((hole) => hole == i)) {
+    continue;
+  } else {
+    missingSquare = i;
+    console.log(i); //517
+    break;
+  }
 }
 
-takenSeats = takenSeats.sort((a,b) => {
-  return a - b
-})
+let col = 0; //5
+let row = 0; //64
+while (missingSquare % 8 != 0) {
+  col++;
+  missingSquare--;
+}
+row = missingSquare / 8;
 
-let minSeat = takenSeats[0]
-for(num of takenSeats){
-  if(num !== minSeat){
-    break 
-  } 
-  minSeat++
+let rmax = 127;
+let rmin = 0;
+let cmax = 7;
+let cmin = 0;
+let codedHole = "";
+
+while (rmax != rmin) {
+  let middle = (rmax + rmin) / 2;
+  if (row > middle) {
+    codedHole += "B";
+    rmin = Math.ceil(middle);
+  }
+  if (row < middle) {
+    codedHole += "F";
+    rmax = Math.floor(middle);
+  }
+}
+while (cmax != cmin) {
+  let middle = (cmax + cmin) / 2;
+  if (col > middle) {
+    codedHole += "R";
+    cmin = Math.ceil(middle);
+  }
+  if (col < middle) {
+    codedHole += "L";
+    cmax = Math.floor(middle);
+  }
 }
 
-let colTotoal = cols.reduce((acc, nxt) => {
-  return acc + nxt
-}, 0)
-let rowTotal = rows.reduce((acc, nxt)=>{
-  return acc + nxt
-}, 0)
+console.log(codedHole); //BFFFFFFFRLR
 
-console.log(`The highest filled seat is ${highestSeatID}`);//#1
-console.log(`The missing seat is ${minSeat}`);//#2
-console.log((517-5)/8); //#3 'BFFFFFFRLR' Row 64 Col 5
-console.log(colTotoal*rowTotal);//#4
+// rows.reduce((total, row) => {
+//   return total+row
+// })
 
+let rowTotal = rows.reduce((total, row) => total + row, 0);
+let colTotal = cols.reduce((total, col) => total + col, 0);
 
+console.log(rowTotal * colTotal); // 116964000
+
+//
+const content = document.getElementById("content");
+for (let i = 0; i <= 1027; i++) {
+  let dug = dugHoles.some((hole) => hole == i);
+  content.innerHTML += `<div class='hole ${dug ? "dug" : "undug"}'>
+    row: ${(i - (i % 8)) / 8} - col: ${i % 8}
+  </div>`;
+}

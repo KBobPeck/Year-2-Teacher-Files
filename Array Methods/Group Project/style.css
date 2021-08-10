@@ -1,0 +1,25 @@
+.content-container {
+  display: flex;
+  width: 820px;
+  /* padding: 50px; */
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  background-color: lightgray;
+  height: 2000px;
+}
+
+.hole {
+  height: 100px;
+  /* flex: 0 0 100px; */
+  width: 100px;
+  border: 1px black solid;
+}
+
+.dug {
+  background-color: chocolate;
+}
+
+.undug {
+  background-color: limegreen;
+}
