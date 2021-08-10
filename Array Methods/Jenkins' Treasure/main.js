@@ -23,7 +23,7 @@ for (holes of input) {
   if (sqNum > max) max = sqNum;
   if (sqNum < min) min = sqNum;
 }
-console.log(max, min);
+console.log(min, max); //51 832
 
 let missingSquare;
 for (let i = min; i <= max; i++) {
@@ -38,11 +38,15 @@ for (let i = min; i <= max; i++) {
 
 let col = 0; //5
 let row = 0; //64
-while (missingSquare % 8 != 0) {
-  col++;
-  missingSquare--;
-}
-row = missingSquare / 8;
+
+col = missingSquare % 8;
+row = (missingSquare - col) / 8;
+
+// while (missingSquare % 8 != 0) {
+//   col++;
+//   missingSquare--;
+// }
+// row = missingSquare / 8;
 
 let rmax = 127;
 let rmin = 0;
