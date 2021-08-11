@@ -7,15 +7,48 @@
   }
 }
 
+//This is a simple way to define a box
+@mixin box($width, $height: $width) {
+  width: $width;
+  height: $height;
+}
+
+// div {
+//   //you can pass width && height
+//   @include box(200px, 300px);
+//   //or just pass width and the height will default to the width value
+//   @include box(200px);
+// }
+
+//covering an entire background
+@mixin cover-background {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+// div {
+//   background-image: url("cute-doggo.png");
+//   @include cover-background;
+// }
+
 /*
 When using ::after and ::before we will always need
 have these properties applied to it. we are able to 
 customize this if needed but we shouldn't need to. 
+uses the box mixin from above for the size
 */
-@mixin pseudo($display: block, $pos: absolute, $content: "") {
+@mixin pseudo(
+  $width: 100%,
+  $height: 100%,
+  $display: block,
+  $pos: absolute,
+  $content: ""
+) {
   content: $content;
   display: $display;
   position: $pos;
+  @include box($width, $height);
 }
 /*
 div::after {
@@ -23,7 +56,70 @@ div::after {
     top: -1rem; left: -1rem;
     width: 1rem; height: 1rem;
 }
+
+div {
+  position: relative;
+  width: 200px;
+  height: 200px;
+
+  &:after {
+    @include pseudo(100px, 100px);
+  }
+}
 */
+
+//FLEX BOX TOOL KIT
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-center-column {
+  @include flex-center;
+  flex-direction: column;
+}
+
+//mixins to help with positioning
+@mixin position($position, $args) {
+  @each $o in top right bottom left {
+    $i: index($args, $o);
+    @if $i and $i + 1 <= length($args) and type-of(nth($args, $i + 1)) == number
+    {
+      #{$o}: nth($args, $i + 1);
+    }
+  }
+  position: $position;
+}
+
+// Positioning helpers
+@mixin absolute($args: "") {
+  @include position(absolute, $args);
+}
+
+@mixin fixed($args: "") {
+  @include position(fixed, $args);
+}
+
+@mixin relative($args: "") {
+  @include position(relative, $args);
+}
+// .menu li {
+//   @include relative;
+// }
+
+// .sub-menu {
+//   @include absolute(top 100% left 0);
+// }
+
+// .sticky-bar {
+//   @include fixed(top 0 left 0);
+// }
 
 //This is used for creating scalable elements typically
 // images or backgrounds that require a ratio
@@ -44,6 +140,132 @@ div {
     @include responsive-ratio(16,9);
 }
 */
+
+//mixin for fading animations
+
+@mixin fade($type) {
+  @if $type== "hide" {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 1s, opacity 1s;
+  } @else if $type== "show" {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 1s, opacity 1s;
+  }
+}
+
+//placeholders have a special way to style
+//just like scrollbars you need to make special
+//styles for firefox, ms, safari, etc...
+//This fixes that
+@mixin input-placeholder {
+  &.placeholder {
+    @content;
+  }
+  &:-moz-placeholder {
+    @content;
+  }
+  &::-moz-placeholder {
+    @content;
+  }
+  &:-ms-input-placeholder {
+    @content;
+  }
+  &::-webkit-input-placeholder {
+    @content;
+  }
+}
+//@content just distributes
+// input,
+// textarea {
+//   @include input-placeholder {
+//     color: $grey;
+//   }
+// }
+
+$tablet: 768;
+$large: 1024;
+$desktop: 1280;
+
+@mixin tablet {
+  @media only screen and (min-width: $tablet * 1px) {
+    @content;
+  }
+}
+
+@mixin large {
+  @media only screen and (min-width: $large * 1px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media only screen and (min-width: $desktop * 1px) {
+    @content;
+  }
+}
+
+// h1 {
+//   font-size: 10px;
+
+//   @include tablet {
+//     font-size: 12px;
+//   }
+
+//   @include desktop {
+//     font-size: 20px;
+//   }
+// }
+
+//Font Face mixin for importing a ttf file
+@mixin font-face($font-name, $file-name, $weight: normal, $style: normal) {
+  @font-face {
+    font-family: quote($font-name);
+    src: url($file-name + ".eot");
+    src: url($file-name + ".eot?#iefix") format("embedded-opentype"),
+      url($file-name + ".woff") format("woff"),
+      url($file-name + ".ttf") format("truetype"),
+      url($file-name + ".svg##{$font-name}") format("svg");
+    font-weight: $weight;
+    font-style: $style;
+  }
+}
+// @include font-face("MyFont", "path/to/MyFont", $style: normal, $weight: normal);
+
+//Keyframe Animations with vendor prefixes
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  }
+}
+// @include keyframes(background) {
+//    0% {
+//      background: white;
+//    }
+//    50% {
+//      background: lightblue;
+//    }
+//    100% {
+//      background: royalblue;
+//    }
+// }
+
+//Text overflow
+@mixin text-shorten {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+// div {
+//    @include text-shorten();
+// }
 
 //Current/modern webdesign use triangles for a lot
 //We are going to create one by hand to see how it
@@ -85,34 +307,36 @@ div {
   }
 }
 
-//placeholders have a special way to style
-//just like scrollbars you need to make special
-//styles for firefox, ms, safari, etc...
-//This fixes that
-@mixin input-placeholder {
-  &.placeholder {
-    @content;
-  }
-  &:-moz-placeholder {
-    @content;
-  }
-  &::-moz-placeholder {
-    @content;
-  }
-  &:-ms-input-placeholder {
-    @content;
-  }
-  &::-webkit-input-placeholder {
-    @content;
-  }
-}
-//@content just distributes
-input,
-textarea {
-  @include input-placeholder {
-    color: $grey;
+////~~~~~~~~THIS IS ADVANCED THE ABOVE IT THE EASY MODE IGNORE BELOW~~~~~~//////
+//This is a set up for media queries that we can use when we want
+//to set up styles for a specific device.
+$breakpoints: (
+  "phone": 400px,
+  "phone-wide": 480px,
+  "phablet": 560px,
+  "tablet-small": 640px,
+  "tablet": 768px,
+  "tablet-wide": 1024px,
+  "desktop": 1248px,
+  "desktop-wide": 1440px,
+);
+@mixin mq($width, $type: min) {
+  @if map_has_key($breakpoints, $width) {
+    $width: map_get($breakpoints, $width);
+    @if $type == max {
+      $width: $width - 1px;
+    }
+    @media only screen and (#{$type}-width: $width) {
+      @content;
+    }
   }
 }
 
-//This is a set up for media queries that we can use when we want
-//to set up styles for a specific device.
+//.site-header {
+//   padding: 2rem;
+//   font-size: 1.8rem;
+//   @include mq('tablet-wide') {
+//       padding-top: 4rem;
+//       font-size: 2.4rem;
+//   }
+// }
