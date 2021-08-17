@@ -1,12 +1,12 @@
 @use '../themes/defaultTheme' as *;
+@use '../util/variables'as *;
+@use '../util/mixins'as *;
 
-.person {
+.list {
   display: grid;
   grid-template-columns: auto 1fr;
   column-gap: 0.75rem;
   margin-bottom: 1.5rem;
-  align-items: center;
-  // background-color: $clr-primary-1;
   border-radius: 3rem;
   img {
     width: 75px;
