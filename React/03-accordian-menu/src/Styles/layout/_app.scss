@@ -2,20 +2,6 @@
 @use '../util/variables'as *;
 @use '../util/mixins'as *;
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  background: $primary-5;
-  color: $primary-3;
-  line-height: 1.5;
-  font-size: 0.875rem;
-}
-
-main {
-  min-height: 100vh;
-  @include flex-center;
-}
-
 .container {
   width: 90vw;
   margin: 5rem 0;
@@ -29,21 +15,7 @@ main {
     text-transform: none;
     margin-bottom: 2rem;
   }
-  button {
-    color: $white;
-    @include flex-center;
-    flex-direction: row;
-    width: 45%;
-    border-color: transparent;
-    background: $primary-4;
-    margin: 2rem auto 0 auto;
-    text-transform: capitalize;
-    font-size: 1.2rem;
-    padding: 0.5rem 0;
-    letter-spacing: $spacing;
-    border-radius: $radius;
-    outline: none;
-  }
+
   .buttons {
     @include flex-center;
   }
@@ -58,4 +30,16 @@ main {
   .section {
     width: 95vw;
   }
+}
+
+.btn {
+  @include flex-center;
+  @include box(2rem);
+  border-color: transparent;
+  background: $grey-8;
+  border-radius: 50%;
+  color: $red-dark;
+  margin-left: 1rem;
+  align-self: center;
+  min-width: 2rem;
 }
