@@ -1,0 +1,30 @@
+@use '../themes/defaultTheme' as *;
+@use '../util/variables'as *;
+@use '../util/mixins'as *;
+
+.section {
+  width: 90vw;
+  margin: 0 auto;
+  max-width: $max-width;
+}
+
+@media screen and (min-width: 992px) {
+  .section {
+    width: 95vw;
+  }
+}
+
+.btn {
+  background: $primary-5;
+  display: inline-block;
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+  border-radius: $radius;
+  text-transform: capitalize;
+  color: $white;
+  letter-spacing: $spacing;
+  border-color: transparent;
+  cursor: pointer;
+  margin-top: 2rem;
+  font-size: 1.2rem;
+}
