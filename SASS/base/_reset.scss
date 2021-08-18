@@ -1,15 +1,3 @@
-/*
-	HTML5 Reset :: style.css
-	----------------------------------------------------------
-	We have learned much from/been inspired by/taken code where offered from:
-	Eric Meyer					:: http://meyerweb.com
-	HTML5 Doctor				:: http://html5doctor.com
-	and the HTML5 Boilerplate	:: http://html5boilerplate.com
--------------------------------------------------------------------------------*/
-
-/* Let's default this puppy out
--------------------------------------------------------------------------------*/
-
 *,
 *::after,
 *::before {
@@ -35,23 +23,20 @@ summary {
   display: block;
 }
 
-/* Handle box-sizing while better addressing child elements:
-   http://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
+//handle box-sizing on a inhereted level
 html {
   box-sizing: border-box;
 }
 
 *,
-*:before,
-*:after {
+*::after,
+*::before {
   box-sizing: inherit;
 }
 
-/* consider resetting the default cursor: https://gist.github.com/murtaugh/5247154 */
-
-/* Responsive images and other embedded objects */
-/* if you don't have full control over `img` tags (if you have to overcome attributes), 
-consider adding height: auto */
+//this helps with img scaling, you might have an
+//issue if you didn't make the embed. If you do
+//comment out height: auto
 img,
 object,
 embed {
@@ -59,23 +44,11 @@ embed {
   height: auto;
 }
 
-/*
-   Note: keeping IMG here will cause problems if you're using foreground images as sprites.
-	In fact, it *will* cause problems with Google Maps' controls at small size.
-	If this is the case for you, try uncommenting the following:
-#map img {
-		max-width: none;
-}
-*/
-
-/* force a vertical scrollbar to prevent a jumpy page */
+//add smoth scrolling to your pages
 html {
   overflow-y: scroll;
 }
 
-/* we use a lot of ULs that aren't bulleted.
-	you'll have to restore the bullets within content,
-	which is fine because they're probably customized anyway */
 ul {
   list-style: none;
 }
@@ -83,23 +56,18 @@ ul {
 blockquote,
 q {
   quotes: none;
+  &::before,
+  &::after {
+    content: "";
+    content: none;
+  }
 }
 
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
-  content: "";
-  content: none;
-}
-
-a {
-  margin: 0;
-  padding: 0;
-  font-size: 100%;
-  vertical-align: baseline;
-  background: transparent;
-}
+// blockquote::before,
+// blockquote::after,
+// q::before,
+// q::after {
+// }
 
 del {
   text-decoration: line-through;
@@ -107,24 +75,23 @@ del {
 
 abbr[title],
 dfn[title] {
-  border-bottom: 1px dotted #000;
+  border-bottom: 1px dotted #222;
   cursor: help;
 }
 
-/* tables still need cellspacing="0" in the markup */
+//table settings
 table {
   border-collapse: separate;
   border-spacing: 0;
 }
 th {
   font-weight: bold;
-  vertical-align: bottom;
+  vertical-align: bottom; //center is also common
 }
 td {
   font-weight: normal;
   vertical-align: top;
 }
-
 hr {
   display: block;
   height: 1px;
@@ -140,10 +107,10 @@ select {
 }
 
 pre {
-  white-space: pre; /* CSS2 */
-  white-space: pre-wrap; /* CSS 2.1 */
-  white-space: pre-line; /* CSS 3 (and 2.1 as well, actually) */
-  word-wrap: break-word; /* IE */
+  white-space: pre; //CSS2
+  white-space: pre-wrap; //CSS2.1
+  white-space: pre-line; //CSS3
+  word-wrap: break-word; // IE
 }
 
 input[type="radio"] {
@@ -162,12 +129,7 @@ input[type="checkbox"] {
 select,
 input,
 textarea {
-  font: 99% sans-serif;
-}
-
-table {
-  font-size: inherit;
-  font: 100%;
+  font-size: 99%;
 }
 
 small {
@@ -178,18 +140,14 @@ strong {
   font-weight: bold;
 }
 
-td,
-td img {
-  vertical-align: top;
-}
-
-/* Make sure sup and sub don't mess with your line-heights http://gist.github.com/413930 */
+//super and sub text
 sub,
 sup {
   font-size: 75%;
   line-height: 0;
   position: relative;
 }
+
 sup {
   top: -0.5em;
 }
@@ -197,15 +155,6 @@ sub {
   bottom: -0.25em;
 }
 
-/* standardize any monospaced elements */
-pre,
-code,
-kbd,
-samp {
-  font-family: monospace, sans-serif;
-}
-
-/* hand cursor on clickable elements */
 .clickable,
 label,
 input[type="button"],
@@ -215,25 +164,20 @@ button {
   cursor: pointer;
 }
 
-/* make buttons play nice in IE */
+//fix buttons for IE7
 button,
 input[type="button"] {
   width: auto;
-  overflow: visible;
+  overflow: hidden;
 }
 
-/* scale images in IE7 more attractively */
+//fix scalable imgs for IE7
 .ie7 img {
   -ms-interpolation-mode: bicubic;
 }
 
-/* prevent BG image flicker upon hover
-   (commented out as usage is rare, and the filter syntax messes with some pre-processors)
-.ie6 html {filter: expression(document.execCommand("BackgroundImageCache", false, true));}
-*/
-
-/* let's clear some floats */
-.clearfix:after {
+//fixing container collapse
+.clearfix::after {
   content: " ";
   display: block;
   clear: both;

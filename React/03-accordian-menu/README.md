@@ -2,7 +2,7 @@
 
 [uidesigndaily](https://uidesigndaily.com/posts/sketch-accordion-website-day-1175)
 
-![](./idea.png);
+![](./idea.png)
 
 # React Projects Starter APP
 
@@ -20,11 +20,11 @@
 - mapping an array
 - destructuring
 
-### `Fetching Data from an API`
+### `Conditional Rendering`
 
-- Async / Await
-- distributing json recieved
+- ternaries
+- onlyif statements
 
-### `Basic Error Handling`
+### `Importing Libraries`
 
-- try and catch
+- importing svg imgs
