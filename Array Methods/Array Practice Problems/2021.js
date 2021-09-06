@@ -58,8 +58,9 @@ for (let i = 0; i < input.length; i++) {
   }
 }
 
-
 //Part 1 break down the list and find the index of 2021
 //Part 2 go through the list and find the 2 numbers that add to 2021 and multiply them
 //Part 3 go through the list and find the 3 numbers that add to 2021 and mulitply them
 //Part 4 go through the list and find the 4 numbers that add to 2021 and mulitply them
+
+
