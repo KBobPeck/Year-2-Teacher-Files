@@ -1,0 +1,90 @@
+@use '../themes/defaultTheme' as *;
+@use '../util/variables'as *;
+@use '../util/mixins'as *;
+
+.container {
+  width: 90vw;
+  margin: 5rem 0;
+  max-width: $fixed-width;
+  background: $white;
+  border-radius: $radius;
+  padding: 1.5rem 2rem;
+  box-shadow: $dark-shadow;
+  h3 {
+    font-weight: normal;
+    text-transform: none;
+    margin-bottom: 2rem;
+  }
+
+  .buttons {
+    @include flex-center;
+  }
+}
+.section {
+  width: 90vw;
+  margin: 0 auto;
+  max-width: $max-width;
+}
+
+@include large {
+  .section {
+    width: 95vw;
+  }
+}
+
+.btn {
+  text-transform: uppercase;
+  padding: 0.375rem 0.75rem;
+  border-color: transparent;
+  background: $black;
+  border-radius: $radius;
+  letter-spacing: $spacing;
+  display: block;
+  transition: $transition;
+  font-size: 0.875rem;
+  border: 2px solid $black;
+  color: $white;
+  box-shadow: $light-shadow;
+  margin-left: 0.5rem;
+  &:hover{
+    color: $black;
+    background: transparent;
+  }
+}
+
+nav {
+  background: $white;
+  box-shadow: $light-shadow;
+  height: 15rem;
+}
+
+main{
+  min-height: 100vh;
+  @include flex-center;
+  flex-direction: column;
+}
+
+.sidebar-toggle {
+  position: fixed;
+  top: 2rem;
+  left: 3rem;
+  font-size: 2rem;
+  background: transparent;
+  border-color: transparent;
+  color: $primary-5;
+  transition: $transition;
+  cursor: pointer;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
