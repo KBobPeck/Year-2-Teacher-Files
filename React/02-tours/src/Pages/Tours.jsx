@@ -1,8 +1,8 @@
 import React from "react";
 import Tour from "../Components/Tour";
-const Tours = ({ tours, removeTour }) => {
+const Tours = ({ tours, removeTour, fetchTours }) => {
   return (
-    <section>
+    <section className="tours">
       <div className="title">
         <h2>our tours</h2>
         <div className="underline"></div>
@@ -12,6 +12,9 @@ const Tours = ({ tours, removeTour }) => {
           return <Tour key={tour.id} {...tour} removeTour={removeTour} />;
         })}
       </div>
+      <button className="btn" onClick={() => fetchTours()}>
+        refresh
+      </button>
     </section>
   );
 };

@@ -1,0 +1,40 @@
+@use '../themes/defaultTheme' as *;
+@use '../util/variables'as *;
+@use '../util/mixins'as *;
+
+.container {
+  width: 90vw;
+  margin: 5rem 0;
+  max-width: $fixed-width;
+  background: $white;
+  border-radius: $radius;
+  padding: 1.5rem 2rem;
+  box-shadow: $dark-shadow;
+  h3 {
+    font-weight: normal;
+    text-transform: none;
+    margin-bottom: 2rem;
+  }
+}
+.section {
+  width: 90vw;
+  @include center-auto;
+  max-width: $max-width;
+  padding: 5rem 0;
+}
+
+@include large {
+  .section {
+    width: 95vw;
+  }
+}
+
+.underline {
+  @include box(5rem, 0.25rem);
+  @include center-auto;
+  background: $gold;
+}
+.title {
+  text-align: center;
+  margin-bottom: 2rem;
+}

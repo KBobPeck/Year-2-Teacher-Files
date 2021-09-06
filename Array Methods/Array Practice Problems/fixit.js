@@ -13,9 +13,11 @@ const drinks = [
   "Wine",
   "Daiquari",
 ];
+
 let mDrinks = drinks.filter(drinks = return drinks == "M...")
 // Expected Outcome
 // mDrinks = ['Milkshake', 'Milk', 'Martini', 'Margarita']
+
 /////////////////////////////////////////////////////////////////////
 const colors = [
   "red",
@@ -30,7 +32,8 @@ const colors = [
 
 let newArray = colors.map((index) => {
   {color, index;}
-})
+});
+
 // Expected Outcome
 // [
 //   { color: "red", index: 0 },
@@ -45,8 +48,9 @@ let newArray = colors.map((index) => {
 const pets = ["snake", "dog", "cat", "fish", "lizard", "bird", "rabbit"];
 
 pets = pets.map((pet) => {
-  pets = pet.capitalize()
-})
+  pets = pet.capitalize();
+});
 // Expected Outcome
 // pets = ["Snake", "Dog", "Cat", "Fish", "Lizard", "Bird", "Rabbit"];
 ///////////////////////////////////////////////////////////////
+

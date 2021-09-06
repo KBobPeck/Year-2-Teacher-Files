@@ -1,7 +1,8 @@
 @use '../themes/defaultTheme' as *;
-
+@use '../util/variables'as *;
+@use '../util/mixins'as *;
 .single-tour {
-  background: $clr-white;
+  background: $white;
   border-radius: $radius;
   margin: 2rem 0;
   box-shadow: $light-shadow;
@@ -20,7 +21,7 @@
     background: transparent;
     border-color: transparent;
     text-transform: capitalize;
-    color: $clr-primary-5;
+    color: $primary-4;
     font-size: 1rem;
     cursor: pointer;
     padding-left: 0.25rem;
@@ -32,31 +33,30 @@
     display: block;
     width: 200px;
     margin: 1rem auto 0 auto;
-    color: $clr-red-dark;
+    color: $red-dark;
     letter-spacing: $spacing;
     background: transparent;
-    border: 1px solid $clr-red-dark;
+    border: 1px solid $red-dark;
     padding: 0.25rem 0.5rem;
     border-radius: $radius;
-    transition: $tra;
+    transition: $transition;
     &:hover {
-      color: $clr-white;
-      background-color: $clr-red-dark;
+      color: $white;
+      background-color: $red-dark;
     }
   }
-}
-.tour-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  h4 {
-    margin-bottom: 0;
+  .tour-info {
+    @include flex-center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    h4 {
+      margin-bottom: 0;
+    }
   }
-}
-.tour-price {
-  color: $clr-primary-5;
-  background: $clr-primary-10;
-  padding: 0.25rem 0.5rem;
-  border-radius: $radius;
+  .tour-price {
+    color: $primary-4;
+    background: $primary-9;
+    padding: 0.25rem 0.5rem;
+    border-radius: $radius;
+  }
 }

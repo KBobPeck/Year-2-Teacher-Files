@@ -1,0 +1,34 @@
+// Function
+@function half($num) {
+  @return $num / 2;
+}
+
+// Example
+// .example {
+//  width: $element-width;
+//  height: half($element-width);
+// }
+
+// Function
+@function neg($num) {
+  @return 0 - $num;
+}
+
+// Example
+// .example {
+//  top: neg($element-width);
+// }
+
+// Function
+@function halfNeg($num) {
+  @return neg(half($num));
+}
+
+// Example
+// .example {
+//  position: absolute;
+//  width: $element-width;
+//  left: 50%;
+//  transform: translateX(halfNeg($element-width));
+// }
+
