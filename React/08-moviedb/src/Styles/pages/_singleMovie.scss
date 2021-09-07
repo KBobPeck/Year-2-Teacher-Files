@@ -1,0 +1,44 @@
+@use '../themes/defaultTheme' as *;
+@use '../util/variables'as *;
+@use '../util/mixins'as *;
+
+.single-movie {
+  width: 90vw;
+  max-width: $max-width;
+  min-height: 100vh;
+  align-items: center;
+  margin: 0 auto;
+  display: grid;
+  gap: 2rem;
+  img {
+    width: 350px;
+    margin: 0 auto;
+    display: block;
+  }
+  p {
+    // max-width: 35em;
+    font-size: 1.2rem;
+    margin-top: 1.5rem;
+    line-height: 1.8;
+  }
+  .btn {
+    text-transform: capitalize;
+    padding: 0.25rem 0.5rem;
+    background: $primary-5;
+    color: $white;
+    border-radius: $radius;
+    display: inline-block;
+    margin-top: 0.5rem;
+    letter-spacing: $spacing;
+  }
+
+  .page-error {
+    text-align: center;
+    padding: 2rem;
+  }
+}
+@include large{
+  .single-movie {
+    grid-template-columns: 1fr 2fr;
+  }
+}
