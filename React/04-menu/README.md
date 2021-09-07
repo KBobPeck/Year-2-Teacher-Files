@@ -1,4 +1,4 @@
-# React Menu Project
+# 04-menu
 
 ## Main Concepts
 
@@ -10,14 +10,9 @@
 ### `Advanced Array Methods`
 
 - mapping an array
-- fitlering
+- filtering
+- using sets and spread operators
 
-### `Fetching Data from an API`
+### `conditional rendering`
 
-- Async / Await
-- distributing json received
-- useEffect
-
-### `Basic Error Handling`
-
-- try and catch
+- we will only load pictures from the data with certain properties

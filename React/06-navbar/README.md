@@ -1,4 +1,4 @@
-# 06-tabs
+# 06-navbar
 
 ## Main Concepts
 

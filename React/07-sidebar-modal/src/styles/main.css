@@ -55,7 +55,7 @@ embed {
 }
 
 html {
-  overflow-y: auto;
+  overflow-y: scroll;
 }
 
 ul {
@@ -177,10 +177,6 @@ button,
 input[type=button] {
   width: auto;
   overflow: hidden;
-}
-button:visited,
-input[type=button]:visited {
-  color: inherit;
 }
 
 .ie7 img {

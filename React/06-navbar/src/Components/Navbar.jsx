@@ -9,7 +9,7 @@ const Navbar = () => {
 
   // this function will hide and show the links based on the window size
   // so that nothing can be missing when you chance from large to small
-  //you can use a .show class to do the same thing but this shows what a useref does
+  //you can use a .show class to do the same thing but this shows what a useref
   const checkSize = () => {
     if (window.innerWidth > 768) {
       setShowLinks(true);

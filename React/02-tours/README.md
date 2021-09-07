@@ -1,4 +1,4 @@
-# React Projects Starter APP
+# 02-tours
 
 ## Main Concepts
 

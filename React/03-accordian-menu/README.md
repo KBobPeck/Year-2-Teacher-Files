@@ -4,7 +4,7 @@
 
 ![](./idea.png)
 
-# React Projects Starter APP
+# 03-accordian-menu
 
 ## Main Concepts
 

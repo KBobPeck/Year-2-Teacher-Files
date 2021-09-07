@@ -1,0 +1,45 @@
+@use '../themes/defaultTheme' as *;
+@use '../util/variables'as *;
+@use '../util/mixins'as *;
+
+.container {
+  width: 90vw;
+  margin: 5rem 0;
+  max-width: $fixed-width;
+  background: $white;
+  border-radius: $radius;
+  padding: 1.5rem 2rem;
+  box-shadow: $dark-shadow;
+  h3 {
+    font-weight: normal;
+    text-transform: none;
+    margin-bottom: 2rem;
+  }
+
+  .buttons {
+    @include flex-center;
+  }
+}
+.section {
+  width: 90vw;
+  margin: 0 auto;
+  max-width: $max-width;
+}
+
+@include large {
+  .section {
+    width: 95vw;
+  }
+}
+
+.btn {
+  @include flex-center;
+  @include box(2rem);
+  border-color: transparent;
+  background: $grey-8;
+  border-radius: 50%;
+  color: $red-dark;
+  margin-left: 1rem;
+  align-self: center;
+  min-width: 2rem;
+}

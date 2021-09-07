@@ -46,7 +46,7 @@ embed {
 
 //add smoth scrolling to your pages
 html {
-  overflow-y: auto;
+  overflow-y: scroll;
 }
 
 ul {
@@ -169,9 +169,8 @@ button,
 input[type="button"] {
   width: auto;
   overflow: hidden;
-  &:visited {
-    color: inherit;
-  }
+  border-color: transparent;
+  text-transform: capitalize;
 }
 
 //fix scalable imgs for IE7

@@ -1,4 +1,4 @@
-# React Projects Starter APP
+# 05-tabs (totally skippable)
 
 ## Main Concepts
 
@@ -12,12 +12,11 @@
 - mapping an array
 - destructuring
 
-### `Fetching Data from an API`
+### `conditional rendering`
 
-- Async / Await
-- distributing json received
-- useEffect
+- we will only load pictures from the data with certain properties
 
-### `Basic Error Handling`
+### `styling`
 
-- try and catch
+- the main focus of this project is to show responsive styles and layout styles
+- leading the sidebar alone and then changing the center of the site

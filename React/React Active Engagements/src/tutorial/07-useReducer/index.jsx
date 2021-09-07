@@ -9,8 +9,8 @@ const defaultState = {
   modalContent: "",
 };
 const Index = () => {
-  const [name, setName] = useState("");
   const [state, dispatch] = useReducer(reducer, defaultState);
+  const [name, setName] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
     if (name) {
