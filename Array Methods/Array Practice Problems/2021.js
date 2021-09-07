@@ -17,8 +17,51 @@ let input = [
   1775, 1593, 651, 1530, 1743,
 ];
 
+for (let i = 0; i < input.length; i++) {
+  if (input[i] == 2021) console.log(input[i], i);
+}
+
+for (let i = 0; i < input.length; i++) {
+  for (let j = i + 1; j < input.length; j++) {
+    if (input[i] + input[j] == 2021)
+      console.log(input[i] * input[j], input[i], input[j]);
+  }
+}
+
+for (let i = 0; i < input.length; i++) {
+  for (let j = i + 1; j < input.length; j++) {
+    for (let k = j + 1; k < input.length; k++) {
+      if (input[i] + input[j] + input[k] == 2021)
+        console.log(
+          input[i] * input[j] * input[k],
+          input[i],
+          input[j],
+          input[k]
+        );
+    }
+  }
+}
+for (let i = 0; i < input.length; i++) {
+  for (let j = i + 1; j < input.length; j++) {
+    for (let k = j + 1; k < input.length; k++) {
+      for (let l = k + 1; l < input.length; l++) {
+        if (input[i] + input[j] + input[k] + input[l] == 2021)
+          console.log(
+            input[i] * input[j] * input[k] * input[l],
+            input[i],
+            input[j],
+            input[k],
+            input[l]
+          );
+      }
+    }
+  }
+}
+
 //Part 1 break down the list and find the index of 2021
 //Part 2 go through the list and find the 2 numbers that add to 2021
 //and multiply them
 //Part 3 go through the list and find the 3 numbers that add to 2021 and mulitply them
 //Part 4 go through the list and find the 4 numbers that add to 2021 and mulitply them
+
+
