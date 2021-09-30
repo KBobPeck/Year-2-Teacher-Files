@@ -22,7 +22,7 @@
     font-size: 1.75rem;
     background: transparent;
     border-color: transparent;
-    color: $primary-4;
+    // color: $primary-4;
     transition: $transition;
     cursor: pointer;
     color: $red-dark;
@@ -82,5 +82,30 @@
     .sidebar {
       width: 400px;
     }
+  }
+}
+
+.sidebar-toggle {
+  position: fixed;
+  top: 2rem;
+  left: 3rem;
+  font-size: 2rem;
+  background: transparent;
+  border-color: transparent;
+  color: $primary-5;
+  transition: $transition;
+  cursor: pointer;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
   }
 }

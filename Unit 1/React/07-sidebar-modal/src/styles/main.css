@@ -346,20 +346,7 @@ main {
   color: #b152e0;
   transition: all 0.5s linear;
   cursor: pointer;
-  -webkit-animation: bounce 2s ease-in-out infinite;
-          animation: bounce 2s ease-in-out infinite;
-}
-
-@-webkit-keyframes bounce {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.5);
-  }
-  100% {
-    transform: scale(1);
-  }
+  animation: bounce 2s ease-in-out infinite;
 }
 
 @keyframes bounce {
@@ -436,7 +423,6 @@ main {
   font-size: 1.75rem;
   background: transparent;
   border-color: transparent;
-  color: #a12fda;
   transition: all 0.5s linear;
   cursor: pointer;
   color: #cc0000;
@@ -492,5 +478,30 @@ main {
 @media screen and (min-width: 676px) {
   .sidebar .sidebar {
     width: 400px;
+  }
+}
+
+.sidebar-toggle {
+  position: fixed;
+  top: 2rem;
+  left: 3rem;
+  font-size: 2rem;
+  background: transparent;
+  border-color: transparent;
+  color: #b152e0;
+  transition: all 0.5s linear;
+  cursor: pointer;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
   }
 }/*# sourceMappingURL=main.css.map */
