@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Pasquale Crea">
+    <meta name="description" content="">
+    <link type="text/css" rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main>
+    </main>
+</body>
+<script>
+    var main = document.querySelector('main');
+    let template =
+        `<img src="NodeJS.png" alt="NodeJS">
+        <img src="asci.gif" alt="gif">
+        <img src="grid.jpg" alt="jpg">`;
+    main.innerHTML = template.repeat(30);
+    for (var i = main.children.length; i >= 0; i--) {
+        main.appendChild(main.children[Math.random() * i | 0]);
+    }
+</script>
+
+</html>
