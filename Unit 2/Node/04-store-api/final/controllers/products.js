@@ -3,7 +3,7 @@ const Product = require("../models/product");
 const getAllProductsStatic = async (req, res) => {
   //testing the error handler
   //you can throw an error from here and see the handler catch it
-  throw new Error("testing async errors");
+  // throw new Error("testing async errors");
 
   const products = await Product.find({ price: { $gt: 30 } })
     .sort("price")
@@ -11,6 +11,7 @@ const getAllProductsStatic = async (req, res) => {
 
   res.status(200).json({ products, nbHits: products.length });
 };
+
 const getAllProducts = async (req, res) => {
   const { featured, company, name, sort, fields, numericFilters } = req.query;
   const queryObject = {};

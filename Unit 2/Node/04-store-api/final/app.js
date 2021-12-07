@@ -24,6 +24,8 @@ app.get("/", (req, res) => {
 app.use("/api/v1/products", productsRouter);
 
 // error handlers
+// not found middleware is used automatically when there is a 404 error
+// error middleware is loaded any time a 500 error occurs which is on any server error that the dev causes
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
 

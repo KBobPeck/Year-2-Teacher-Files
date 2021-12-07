@@ -1,0 +1,9 @@
+5hui1oi5° //fail no letters between nthe 5 and °
+          //fail only 2 letter between 1 and 5
+          //fail 515 is greater than 255
+
+4utiy  2pntb9iieq'
+  //pass 29'
+
+6njkb  2jkb"bjkrtjhT  uabitaS
+// 2"T fails
