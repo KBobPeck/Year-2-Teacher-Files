@@ -1,9 +1,17 @@
 const express = require('express')
-const path = require('path')
-
 const app = express()
 
+const path = require('path')
+
 // setup static and middleware
+//I changed the name of the folders /methods... and /navbar... to /public individually
+//this allows the students to see that they are both working
+
+//express.static is for any site that does not have updating information
+//this does not mean the js changing the site.
+
+//THIS WILL NOT WORK ON JAVASCRIPT YET BUT YOU CAN CLICK IT TO 
+//TO SEE WHAT HAPPENS WHEN THE DATA FAILS TO LOAD
 app.use(express.static('./public'))
 
 // app.get('/', (req, res) => {

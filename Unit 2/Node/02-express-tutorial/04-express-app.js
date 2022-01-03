@@ -4,8 +4,10 @@ const path = require('path')
 const app = express()
 
 // setup static and middleware
-app.use(express.static('./public'))
 
+//this will return the html to the page but it will still
+//have the errors from the node way. 
+//this is fixed using .use in the next file
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, './navbar-app/index.html'))
 })
