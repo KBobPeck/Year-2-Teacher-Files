@@ -31,12 +31,12 @@ abstract class Department {
 class ITDepartment extends Department {
   admins: string[];
   constructor(id: string, admins: string[]) {
-    super(id, 'IT');
+    super(id, "IT");
     this.admins = admins;
   }
 
   describe() {
-    console.log('IT Department - ID: ' + this.id);
+    console.log("IT Department - ID: " + this.id);
   }
 }
 
@@ -48,18 +48,18 @@ class AccountingDepartment extends Department {
     if (this.lastReport) {
       return this.lastReport;
     }
-    throw new Error('No report found.');
+    throw new Error("No report found.");
   }
 
   set mostRecentReport(value: string) {
     if (!value) {
-      throw new Error('Please pass in a valid value!');
+      throw new Error("Please pass in a valid value!");
     }
     this.addReport(value);
   }
 
   private constructor(id: string, private reports: string[]) {
-    super(id, 'Accounting');
+    super(id, "Accounting");
     this.lastReport = reports[0];
   }
 
@@ -67,16 +67,16 @@ class AccountingDepartment extends Department {
     if (AccountingDepartment.instance) {
       return this.instance;
     }
-    this.instance = new AccountingDepartment('d2', []);
+    this.instance = new AccountingDepartment("d2", []);
     return this.instance;
   }
 
   describe() {
-    console.log('Accounting Department - ID: ' + this.id);
+    console.log("Accounting Department - ID: " + this.id);
   }
 
   addEmployee(name: string) {
-    if (name === 'Max') {
+    if (name === "Max") {
       return;
     }
     this.employees.push(name);
@@ -92,18 +92,18 @@ class AccountingDepartment extends Department {
   }
 }
 
-const employee1 = Department.createEmployee('Max');
+const employee1 = Department.createEmployee("Max");
 console.log(employee1, Department.fiscalYear);
 
-const it = new ITDepartment('d1', ['Max']);
+const it = new ITDepartment("d1", ["Max"]);
 
-it.addEmployee('Max');
-it.addEmployee('Manu');
+it.addEmployee("Max");
+it.addEmployee("Manu");
 
 // it.employees[2] = 'Anna';
 
 it.describe();
-it.name = 'NEW NAME';
+it.name = "NEW NAME";
 it.printEmployeeInformation();
 
 console.log(it);
@@ -114,12 +114,12 @@ const accounting2 = AccountingDepartment.getInstance();
 
 console.log(accounting, accounting2);
 
-accounting.mostRecentReport = 'Year End Report';
-accounting.addReport('Something went wrong...');
+accounting.mostRecentReport = "Year End Report";
+accounting.addReport("Something went wrong...");
 console.log(accounting.mostRecentReport);
 
-accounting.addEmployee('Max');
-accounting.addEmployee('Manu');
+accounting.addEmployee("Max");
+accounting.addEmployee("Manu");
 
 // accounting.printReports();
 // accounting.printEmployeeInformation();

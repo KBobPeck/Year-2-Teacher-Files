@@ -3,7 +3,7 @@ function add2(n1: number, n2: number) {
 }
 
 function printResult(num: number): void {
-  console.log('Result: ' + num);
+  console.log("Result: " + num);
 }
 
 function addAndHandle(n1: number, n2: number, cb: (num: number) => void) {

@@ -13,11 +13,10 @@ function clickHandler(message: string) {
   console.log('Clicked! ' + message);
 }
 
-
-if (button) {
-  button.addEventListener('click', clickHandler.bind(null, "You're welcome!"));
-}
-
 button?.addEventListener('click', clickHandler.bind(null, "You're welcome!"));
+
+// if (button) {
+//   button.addEventListener('click', clickHandler.bind(null, "You're welcome!"));
+// }
 
 //or add a ! at the end of the variable declaration
