@@ -8,7 +8,7 @@ function ImageDropDiv({
   handleChange,
   mediaPreview,
   setMediaPreview,
-  setMedia
+  setMedia,
 }) {
   return (
     <>
@@ -24,25 +24,32 @@ function ImageDropDiv({
           />
 
           <div
-            onDragOver={e => {
+            onDragOver={(e) => {
               e.preventDefault();
               setHighlighted(true);
             }}
-            onDragLeave={e => {
+            onDragLeave={(e) => {
               e.preventDefault();
               setHighlighted(false);
             }}
-            onDrop={e => {
+            onDrop={(e) => {
               e.preventDefault();
               setHighlighted(true);
+              //! this lets you see what the data looks like, this is only readable from the browser so we need to make an array from the files
+              // console.log(e.dataTransfer.files);
 
               const droppedFile = Array.from(e.dataTransfer.files);
               setMedia(droppedFile[0]);
               setMediaPreview(URL.createObjectURL(droppedFile[0]));
-            }}>
+            }}
+          >
             {mediaPreview === null ? (
               <>
-                <Segment {...(highlighted && {color:"green"})}  placeholder basic>
+                <Segment
+                  {...(highlighted && { color: "green" })}
+                  placeholder
+                  basic
+                >
                   <Header icon>
                     <Icon
                       name="file image outline"

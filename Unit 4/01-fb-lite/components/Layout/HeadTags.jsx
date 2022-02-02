@@ -1,5 +1,7 @@
 import Head from "next/head";
 
+// ! this just replaces the head tag of any page its used. Since this is added to the _app.js page (the complier for any page) it will be added everywhere
+//!!! IMPORTANT !!! once compiled this page will appear in the public folder so make sure to reference all files with just a /
 const HeadTags = () => (
   <>
     <Head>
@@ -12,7 +14,7 @@ const HeadTags = () => (
       <link rel="stylesheet" type="text/css" href="/styles.css" />
       <link rel="stylesheet" type="text/css" href="/nprogress.css" />
 
-      <title>Mini Social Media</title>
+      <title>React Social Media</title>
     </Head>
   </>
 );

@@ -1,26 +1,18 @@
 import React from "react";
 import { Form, Button, Message, TextArea, Divider } from "semantic-ui-react";
 
+//! these props are passed down from the sign up page
 function CommonInputs({
   user: { bio, facebook, instagram, youtube, twitter },
   handleChange,
   showSocialLinks,
-  setShowSocialLinks
+  setShowSocialLinks,
 }) {
   return (
     <>
-      <Form.Field
-        required
-        control={TextArea}
-        name="bio"
-        value={bio}
-        onChange={handleChange}
-        placeholder="bio"
-      />
-
       <Button
         content="Add Social Links"
-        color="red"
+        color="orange"
         icon="at"
         type="button"
         onClick={() => setShowSocialLinks(!showSocialLinks)}
@@ -29,9 +21,16 @@ function CommonInputs({
       {showSocialLinks && (
         <>
           <Divider />
+          <Message
+            icon="attention"
+            info
+            size="small"
+            header="Social Media Links Are Optional!"
+          />
           <Form.Input
             icon="facebook f"
             iconPosition="left"
+            placeholder="facebook"
             name="facebook"
             value={facebook}
             onChange={handleChange}
@@ -40,6 +39,7 @@ function CommonInputs({
           <Form.Input
             icon="twitter"
             iconPosition="left"
+            placeholder="twitter"
             name="twitter"
             value={twitter}
             onChange={handleChange}
@@ -48,6 +48,7 @@ function CommonInputs({
           <Form.Input
             icon="instagram"
             iconPosition="left"
+            placeholder="instagram"
             name="instagram"
             value={instagram}
             onChange={handleChange}
@@ -56,16 +57,10 @@ function CommonInputs({
           <Form.Input
             icon="youtube"
             iconPosition="left"
+            placeholder="youtube"
             name="youtube"
             value={youtube}
             onChange={handleChange}
-          />
-
-          <Message
-            icon="attention"
-            info
-            size="small"
-            header="Social Media Links Are Optional!"
           />
         </>
       )}
