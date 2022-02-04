@@ -101,3 +101,14 @@ _for the API, there is a folder in the pages that work very well for getting inf
 `REFACTOR INCOMING`
 
 _once again I return, heart void of contentment. For the error was so easy and I sent so much time on it that no answer would make me whole again... It's "GET" not "get" and "POST" not "post". I am off to commit sudoku as my ancestors did before me... perhaps the simplicity of 1-9 numbers will help to soften the saddness inside_
+
+- finish up the auth path
+- once this is done we need to set up cloudinary
+- util/uploadPic
+
+_another thing to refactor later ^^ cloudinary is a little different and has an SDK for React so I need to look into that more_
+
+- You should also create a util/baseURL in here too from now on, we dont want to have to refactor the entire site everytime we upload something new
+
+- we can add the check for the name, using params, this needs to be added in the app routing section so that the handler can find it.
+- I think I am going to add a routes folder to make that a little more clear thorugh express Router

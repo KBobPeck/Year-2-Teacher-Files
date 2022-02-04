@@ -1,18 +1,18 @@
-const UserModel = require("../models/UserModel");
-const ProfileModel = require("../models/ProfileModel");
-const FollowerModel = require("../models/FollowerModel");
+const UserModel = require("../../server/models/UserModel");
+const ProfileModel = require("../../server/models/ProfileModel");
+const FollowerModel = require("../../server/models/FollowerModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const isEmail = require("validator/lib/isEmail");
-const defaultUserPic = require("../util/defaultProfilePic");
+const defaultUserPic = require("../../util/defaultProfilePic");
 const regexUserName = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
 
-export default handler = async (req, res) => {
+signupRoute = async (req, res) => {
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //*GET ROUTE */
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-  if (req.method === "GET") {
+  console.log(req.params);
+  if (req.method === "GET" && req.params) {
     const { username } = req.params;
 
     try {
@@ -31,6 +31,8 @@ export default handler = async (req, res) => {
       console.error(error);
       return res.status(500).send(`Server error`);
     }
+
+    return res.status(401).send("Invalid");
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     //*POST ROUTE */
@@ -51,7 +53,7 @@ export default handler = async (req, res) => {
     if (!isEmail(email)) return res.status(401).send("Invalid Email");
 
     if (password.length < 6) {
-      return res.status(401).send("Password must be atleast 6 characters");
+      return res.status(401).send("Password must be at least 6 characters");
     }
 
     try {
@@ -70,7 +72,7 @@ export default handler = async (req, res) => {
       });
 
       user.password = await bcrypt.hash(password, 10);
-      await user.save();
+      user = await user.save();
 
       let profileFields = {};
       profileFields.user = user._id;
@@ -109,6 +111,8 @@ export default handler = async (req, res) => {
     //*ERROR ROUTE */
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   } else {
-    res.status(404).send("Method Not Found");
+    res.status(500).send("Method Not Supported");
   }
 };
+
+module.exports = signupRoute;

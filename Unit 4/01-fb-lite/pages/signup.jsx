@@ -6,6 +6,8 @@ import { useState, useEffect, useRef } from "react";
 import { Form, Segment, Button, Divider, TextArea } from "semantic-ui-react";
 import CommonInputs from "../components/Common/CommonSocials";
 import ImageDropDiv from "../components/Common/ImageDropDiv";
+import axios from "axios";
+import baseUrl from "../util/baseUrl";
 // import { regexUserName } from "../util/authUser";
 const regexUserName = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/gim;
 
@@ -29,7 +31,7 @@ const signup = () => {
 
   const [userName, setUserName] = useState("");
   const [userNameLoading, setUserNameLoading] = useState(false);
-  const [userNameAvailable, setUserNameAvailable] = useState(false);
+  const [userNameAvailable, setUserNameAvailable] = useState(true);
 
   const [media, setMedia] = useState(null);
   const [mediaPreview, setMediaPreview] = useState(null);
@@ -45,6 +47,24 @@ const signup = () => {
     );
     isUser ? setSubmitDisabled(false) : setSubmitDisabled(true);
   }, [user, userName]);
+
+  const checkUsername = async () => {
+    setUserNameLoading(true);
+    try {
+      const res = await axios.get(`/api/v1/signup/${userName}`);
+      if (res.data === "Available") {
+        setUserNameAvailable(true);
+        setUser((prev) => ({ ...prev, userName }));
+      }
+    } catch (error) {
+      setErrorMsg("Username is not available");
+    }
+    setUserNameLoading(false);
+  };
+
+  useEffect(() => {
+    userName === "" ? setUserNameAvailable(false) : checkUsername();
+  }, [userName]);
 
   //! handler functions
   const handleSubmit = (e) => {
@@ -126,7 +146,9 @@ const signup = () => {
           />
           <Form.Input
             loading={userNameLoading}
-            error={!userNameAvailable}
+            error={
+              !userNameAvailable && { content: "testing", pointing: "down" }
+            }
             required
             label="Username"
             placeholder="Username"
