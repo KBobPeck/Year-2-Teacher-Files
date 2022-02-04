@@ -1,5 +1,4 @@
-const express = require("express");
-const router = express.Router();
+
 const UserModel = require("../models/UserModel");
 const ProfileModel = require("../models/ProfileModel");
 const FollowerModel = require("../models/FollowerModel");
@@ -10,26 +9,65 @@ const URL = require("../util/defaultProfilePic");
 
 const regexUserName = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
 
-router.get("/:username", async (req, res) => {
+const getLoginAuth = async (req, res) => {
+  const { email, password } = req.body.user;
+
+  if (!isEmail(email)) return res.status(401).send("Invalid Email");
+
+  if (password.length < 6) {
+    return res.status(401).send("Password must be atleast 6 characters");
+  }
+
+  try {
+    const user = await UserModel.findOne({ email: email.toLowerCase() }).select(
+      "+password"
+    );
+
+    if (!user) {
+      return res.status(401).send("Invalid Credentials");
+    }
+
+    const isPassword = await bcrypt.compare(password, user.password);
+    if (!isPassword) {
+      return res.status(401).send("Invalid Credentials");
+    }
+
+    const payload = { userId: user._id };
+    jwt.sign(
+      payload,
+      process.env.JWT_SECRET,
+      { expiresIn: "2d" },
+      (err, token) => {
+        if (err) throw err;
+        res.status(200).json(token);
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send(`Server error`);
+  }
+};
+
+const getUserNameAvailable = async (req, res) => {
   const { username } = req.params;
 
   try {
-    if (username.length < 1) return res.status(401).send("Invalid");
+    if (username.length < 1) return res.status(200).send("Username too Short");
 
-    if (!regexUserName.test(username)) return res.status(401).send("Invalid");
+    if (!regexUserName.test(username)) return res.status(200).send("Username Invalid");
 
     const user = await UserModel.findOne({ username: username.toLowerCase() });
 
-    if (user) return res.status(401).send("Username already taken");
+    if (user) return res.status(200).send("Username already taken");
 
     return res.status(200).send("Available");
   } catch (error) {
     console.error(error);
     return res.status(500).send(`Server error`);
   }
-});
+};
 
-router.post("/", async (req, res) => {
+const createUser = async (req, res) => {
   const {
     name,
     email,
@@ -45,14 +83,20 @@ router.post("/", async (req, res) => {
   if (!isEmail(email)) return res.status(401).send("Invalid Email");
 
   if (password.length < 6) {
-    return res.status(401).send("Password must be atleast 6 characters");
+    return res.status(401).send("Password must be at least 6 characters");
   }
 
   try {
     let user;
+
     user = await UserModel.findOne({ email: email.toLowerCase() });
     if (user) {
-      return res.status(401).send("User already registered");
+      return res.status(401).send("Email already registered");
+    }
+
+    user = await UserModel.findOne({ username: username.toLowerCase() });
+    if (user) {
+      return res.status(401).send("Username already registered");
     }
 
     user = new UserModel({
@@ -60,7 +104,7 @@ router.post("/", async (req, res) => {
       email: email.toLowerCase(),
       username: username.toLowerCase(),
       password,
-      profilePicUrl: req.body.profilePicUrl || userPng,
+      profilePicURL: req.body.profilePicURL || URL,
     });
 
     user.password = await bcrypt.hash(password, 10);
@@ -87,7 +131,7 @@ router.post("/", async (req, res) => {
     const payload = { userId: user._id };
     jwt.sign(
       payload,
-      process.env.jwtSecret,
+      process.env.JWT_SECRET,
       { expiresIn: "2d" },
       (err, token) => {
         if (err) throw err;
@@ -98,6 +142,6 @@ router.post("/", async (req, res) => {
     console.error(error);
     return res.status(500).send(`Server error`);
   }
-});
+};
 
-module.exports = router;
+module.exports = {getUserNameAvailable, createUser, getLoginAuth}

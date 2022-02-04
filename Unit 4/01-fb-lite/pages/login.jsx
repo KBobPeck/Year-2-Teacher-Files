@@ -1,16 +1,12 @@
 import {
   FooterMessage,
   HeaderMessage,
-} from "../components/Common/WelcomeMessage";
+} from "./components/Common/WelcomeMessage";
 import React, { useState, useEffect } from "react";
-import {
-  Form,
-  Button,
-  Message,
-  Segment,
-  Divider,
-  Grid,
-} from "semantic-ui-react";
+import { Form, Button, Message, Segment, Divider } from "semantic-ui-react";
+import catchErrors from "./util/catchErrors";
+import { setToken } from "./util/authUser";
+import axios from "axios";
 
 const login = () => {
   const [user, setUser] = useState({
@@ -26,22 +22,26 @@ const login = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setUser((prev) => ({ ...prev, [name]: value }));
   };
 
   //! checks to see if fields have been filled
   useEffect(() => {
-    const isUser = Object.values({ email, password }).every((item) =>
-      Boolean(item)
-    );
-    isUser ? setSubmitDisabled(false) : setSubmitDisabled(true);
+    setSubmitDisabled(!(email && password));
   }, [user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setErrorMsg("Something went wrong. Please try again later");
+    setFormLoading(true);
+    try {
+      const res = await axios.post(`/api/v1/auth`, {user});
+      setToken(res.data);
+    } catch (error) {
+      const errorMsg = catchErrors(error);
+      setErrorMsg(errorMsg);
+    }
+    setFormLoading(false);
   };
 
   return (
@@ -81,7 +81,7 @@ const login = () => {
             onChange={handleChange}
             fluid
             icon={{
-              name: "eye",
+              name: showPassword ? "eye" : "eye slash",
               circular: true,
               link: true,
               onClick: () => setShowPassword(!showPassword),
@@ -97,8 +97,6 @@ const login = () => {
             content="Login"
             type="submit"
             color="green"
-            // centered
-            // style={{ width: "80%" }}
             disabled={submitDisabled}
           />
         </Segment>
