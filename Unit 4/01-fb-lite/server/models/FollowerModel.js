@@ -22,6 +22,6 @@ const FollowerSchema = new Schema({
       },
     },
   ],
-});
+}, {timestamps: true});
 
 module.exports = mongoose.model("Follower", FollowerSchema);

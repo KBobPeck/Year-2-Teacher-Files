@@ -1,6 +1,18 @@
 //* EXPRESS APP SETUP
 const express = require("express");
+const { connectDB } = require("./server/util/connect");
+const cloudinary = require("cloudinary").v2;
+const fileUpload = require("express-fileupload");
+
+require("dotenv").config();
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_KEY,
+  api_secret: process.env.CLOUD_SECRET,
+});
+
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 //* NEXT APP SETUP
 //! imports tools from the next library
@@ -12,14 +24,18 @@ const nextApp = next({ dev });
 //! import req handlers for the server
 const handler = nextApp.getRequestHandler();
 
-//*ROUTES */
-const signupRoute = require("./pages/api/signup");
-
 //* MIDDLEWARES
-const { connectDB } = require("./server/util/connect");
-const PORT = process.env.PORT || 3000;
-require("dotenv").config();
 app.use(express.json());
+app.use(fileUpload({ useTempFiles: true }));
+
+//*ROUTERS
+const userRoutes = require("./server/routes/userRoutes");
+const uploadRoutes = require("./server/routes/uploadRoutes");
+const authRoutes = require("./server/routes/authRoutes");
+
+app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/uploads", uploadRoutes);
 
 connectDB();
 

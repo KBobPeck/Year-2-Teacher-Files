@@ -1,15 +1,21 @@
 import {
   FooterMessage,
   HeaderMessage,
-} from "../components/Common/WelcomeMessage";
+} from "./components/Common/WelcomeMessage";
 import { useState, useEffect, useRef } from "react";
-import { Form, Segment, Button, Divider, TextArea } from "semantic-ui-react";
-import CommonInputs from "../components/Common/CommonSocials";
-import ImageDropDiv from "../components/Common/ImageDropDiv";
+import {
+  Form,
+  Segment,
+  Button,
+  Divider,
+  TextArea,
+  Message,
+} from "semantic-ui-react";
+import CommonInputs from "./components/Common/CommonSocials";
+import ImageDropDiv from "./components/Common/ImageDropDiv";
 import axios from "axios";
-import baseUrl from "../util/baseUrl";
-// import { regexUserName } from "../util/authUser";
-const regexUserName = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/gim;
+import { regexUsername, setToken } from "./util/authUser";
+import catchErrors from "./util/catchErrors";
 
 const signup = () => {
   const [user, setUser] = useState({
@@ -28,60 +34,111 @@ const signup = () => {
   const [showSocialLinks, setShowSocialLinks] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [formLoading, setFormLoading] = useState(false);
+  const [submitDisabled, setSubmitDisabled] = useState(true);
 
-  const [userName, setUserName] = useState("");
-  const [userNameLoading, setUserNameLoading] = useState(false);
-  const [userNameAvailable, setUserNameAvailable] = useState(true);
+  const [username, setUsername] = useState("");
+  const [usernameLoading, setUsernameLoading] = useState(false);
+  const [usernameAvailable, setUsernameAvailable] = useState(false);
 
   const [media, setMedia] = useState(null);
   const [mediaPreview, setMediaPreview] = useState(null);
   const [highlighted, setHighlighted] = useState(false);
   const inputRef = useRef(null);
 
-  const [formLoading, setFormLoading] = useState(false);
-  const [submitDisabled, setSubmitDisabled] = useState(true);
+  //* USE EFFECTS
+  useEffect(() => {
+    setSubmitDisabled(!(name && email && password && username));
+  }, [user, username]);
 
   useEffect(() => {
-    const isUser = Object.values({ name, email, password, userName }).every(
-      (item) => Boolean(item)
-    );
+    const isUser = Object.values({ username }).every((item) => Boolean(item));
     isUser ? setSubmitDisabled(false) : setSubmitDisabled(true);
-  }, [user, userName]);
+  }, [username]);
 
   const checkUsername = async () => {
-    setUserNameLoading(true);
+    setUsernameLoading(true);
     try {
-      const res = await axios.get(`/api/v1/signup/${userName}`);
+      const res = await axios.get(`/api/v1/signup/username`);
       if (res.data === "Available") {
-        setUserNameAvailable(true);
-        setUser((prev) => ({ ...prev, userName }));
+        setUsernameAvailable(true);
+        setUser((prev) => ({ ...prev, username }));
       }
     } catch (error) {
       setErrorMsg("Username is not available");
     }
-    setUserNameLoading(false);
+    setUsernameLoading(false);
   };
 
   useEffect(() => {
-    userName === "" ? setUserNameAvailable(false) : checkUsername();
-  }, [userName]);
+    username === "" ? setUsernameAvailable(false) : checkUsername();
+  }, [username]);
 
-  //! handler functions
-  const handleSubmit = (e) => {
+  //* HANDLER FUNCTIONS
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setFormLoading(true);
+
+    let profilePicURL;
+
+    if (media !== null) {
+      const formData = new FormData();
+      formData.append("image", media, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      const res = await axios.post("/api/v1/uploads", formData);
+      profilePicURL = res.data.src;
+    }
+
+    if (media !== null && !profilePicURL) {
+      setFormLoading(false);
+      return setErrorMsg("Error Uploading image");
+    }
+
+    try {
+      const res = await axios.post("/api/v1/user", {
+        user,
+        profilePicURL,
+      });
+
+      setToken(res.data);
+    } catch (error) {
+      const errorMsg = catchErrors(error);
+      setErrorMsg(errorMsg);
+    }
+    setFormLoading(false);
   };
 
   const handleChange = (e) => {
     // ! we added files during the imageDrop part since that is the section that handles our files
     const { name, value, files } = e.target;
 
-    //! you could create a new handler if you wanted to in the imagedrop and just update the user there too
-    if (name === "media") {
-      setMedia(files[0]);
-      setMediaPreview(URL.createObjectURL(files[0]));
+    //! check if the changed thing is the profile picture. If you have one and then cancle the sreach there will be an error unless you check for length 0
+    if (name === "media" && files.length > 0) {
+      setMedia(() => files[0]);
+      setMediaPreview(() => URL.createObjectURL(files[0]));
     }
 
     setUser((prev) => ({ ...prev, [name]: value }));
+  };
+
+  //* FUNCTIONS *
+
+  const checkUsername = async () => {
+    setUsernameLoading(true);
+    try {
+      const res = await axios.get(`/api/v1/user/${username}`);
+      if (res.data === "Available") {
+        setUsernameAvailable(true);
+        setUser((prev) => ({ ...prev, username }));
+      }
+    } catch (error) {
+      setErrorMsg("Username Not Available");
+      setUsernameAvailable(false);
+    }
+    setUsernameLoading(false);
   };
 
   //! for the form you can check the semantic doc to see how loading and error work
@@ -107,6 +164,7 @@ const signup = () => {
               handleChange={handleChange}
             />
           </div>
+          <Message error content={errorMsg} header="Oops!" />
           <Form.Input
             required
             label="Name"
@@ -136,7 +194,7 @@ const signup = () => {
             value={password}
             onChange={handleChange}
             icon={{
-              name: "eye",
+              name: showPassword ? "eye" : "eye slash",
               circular: true,
               link: true,
               onClick: () => setShowPassword(!showPassword),
@@ -145,23 +203,21 @@ const signup = () => {
             type={showPassword ? "text" : "password"}
           />
           <Form.Input
-            loading={userNameLoading}
-            error={
-              !userNameAvailable && { content: "testing", pointing: "down" }
-            }
+            loading={usernameLoading}
+            error={!usernameAvailable}
             required
             label="Username"
             placeholder="Username"
-            icon={userNameAvailable ? "check" : "close"}
-            value={userName}
+            icon={usernameAvailable ? "check" : "close"}
+            value={username}
             onChange={(e) => {
-              setUserName(e.target.value);
-              const test = regexUserName.test(e.target.value);
+              setUsername(e.target.value);
+              const test = regexUsername.test(e.target.value);
               //TODO I HAVE NO CLUE WHY THIS IS SO TEMPREMENTAL ITS DRIVING ME CRAZY
-              if (test || regexUserName.test(e.target.value)) {
-                setUserNameAvailable(true);
+              if (test || regexUsername.test(e.target.value)) {
+                setUsernameAvailable(true);
               } else {
-                setUserNameAvailable(false);
+                setUsernameAvailable(false);
               }
             }}
             fluid
@@ -189,7 +245,7 @@ const signup = () => {
             content="Sign Up"
             type="submit"
             color="green"
-            disabled={submitDisabled || !userNameAvailable}
+            disabled={submitDisabled || !usernameAvailable}
           />
         </Segment>
       </Form>
