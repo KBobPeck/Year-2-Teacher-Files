@@ -40,10 +40,6 @@ app.use("/api/v1/uploads", uploadRoutes);
 connectDB();
 
 nextApp.prepare().then(() => {
-  //*ROUTING */
-  app.use("/api/v1/signup/:username", signupRoute);
-
-  //*SERVER HANDLING */
   app.all("*", (req, res) => handler(req, res));
   app.listen(PORT, (err) => {
     if (err) console.log(err);

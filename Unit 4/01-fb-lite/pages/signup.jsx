@@ -14,8 +14,10 @@ import {
 import CommonInputs from "./components/Common/CommonSocials";
 import ImageDropDiv from "./components/Common/ImageDropDiv";
 import axios from "axios";
-import { regexUsername, setToken } from "./util/authUser";
+import { setToken } from "./util/authUser";
 import catchErrors from "./util/catchErrors";
+
+let cancel;
 
 const signup = () => {
   const [user, setUser] = useState({
@@ -48,27 +50,8 @@ const signup = () => {
 
   //* USE EFFECTS
   useEffect(() => {
-    setSubmitDisabled(!(name && email && password && username));
+    setSubmitDisabled(!(name && bio && email && password && username));
   }, [user, username]);
-
-  useEffect(() => {
-    const isUser = Object.values({ username }).every((item) => Boolean(item));
-    isUser ? setSubmitDisabled(false) : setSubmitDisabled(true);
-  }, [username]);
-
-  const checkUsername = async () => {
-    setUsernameLoading(true);
-    try {
-      const res = await axios.get(`/api/v1/signup/username`);
-      if (res.data === "Available") {
-        setUsernameAvailable(true);
-        setUser((prev) => ({ ...prev, username }));
-      }
-    } catch (error) {
-      setErrorMsg("Username is not available");
-    }
-    setUsernameLoading(false);
-  };
 
   useEffect(() => {
     username === "" ? setUsernameAvailable(false) : checkUsername();
@@ -127,11 +110,19 @@ const signup = () => {
   //* FUNCTIONS *
 
   const checkUsername = async () => {
+    const cancelToken = axios.CancelToken;
     setUsernameLoading(true);
     try {
-      const res = await axios.get(`/api/v1/user/${username}`);
+      cancel && cancel();
+
+      const res = await axios.get(`/api/v1/user/${username}`, {
+        cancelToken: new cancelToken((canceler) => {
+          cancel = canceler;
+        }),
+      });
       if (res.data === "Available") {
         setUsernameAvailable(true);
+        setErrorMsg(null);
         setUser((prev) => ({ ...prev, username }));
       }
     } catch (error) {
@@ -212,13 +203,6 @@ const signup = () => {
             value={username}
             onChange={(e) => {
               setUsername(e.target.value);
-              const test = regexUsername.test(e.target.value);
-              //TODO I HAVE NO CLUE WHY THIS IS SO TEMPREMENTAL ITS DRIVING ME CRAZY
-              if (test || regexUsername.test(e.target.value)) {
-                setUsernameAvailable(true);
-              } else {
-                setUsernameAvailable(false);
-              }
             }}
             fluid
             iconPosition="left"
