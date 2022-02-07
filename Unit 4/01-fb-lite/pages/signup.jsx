@@ -14,11 +14,7 @@ import {
 import CommonInputs from "./components/Common/CommonSocials";
 import ImageDropDiv from "./components/Common/ImageDropDiv";
 import axios from "axios";
-<<<<<<< HEAD
 import {setToken } from "./util/authUser";
-=======
-import { setToken } from "./util/authUser";
->>>>>>> 11c42ab7df27b30525ab0b3851d26179b6adba2b
 import catchErrors from "./util/catchErrors";
 import { checkToken } from "./util/authUser";
 
