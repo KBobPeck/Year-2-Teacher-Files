@@ -3,18 +3,27 @@ import {
   HeaderMessage,
 } from "./components/Common/WelcomeMessage";
 import { useState, useEffect, useRef } from "react";
-import { Form, Segment, Button, Divider, TextArea, Message } from "semantic-ui-react";
+import {
+  Form,
+  Segment,
+  Button,
+  Divider,
+  TextArea,
+  Message,
+} from "semantic-ui-react";
 import CommonInputs from "./components/Common/CommonSocials";
 import ImageDropDiv from "./components/Common/ImageDropDiv";
 import axios from "axios";
-import {regexUsername, setToken} from "./util/authUser";
+import {setToken } from "./util/authUser";
 import catchErrors from "./util/catchErrors";
+import { checkToken } from "./util/authUser";
 
 const signup = () => {
   const [user, setUser] = useState({
     name: "",
     email: "",
     password: "",
+    username: "",
     bio: "",
     facebook: "",
     youtube: "",
@@ -56,34 +65,33 @@ const signup = () => {
     let profilePicURL;
 
     if (media !== null) {
-      const formData = new FormData()
-      formData.append('image', media, {
+      const formData = new FormData();
+      formData.append("image", media, {
         headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
+          "Content-Type": "multipart/form-data",
+        },
+      });
       const res = await axios.post("/api/v1/uploads", formData);
-      profilePicURL = res.data.src
+      profilePicURL = res.data.src;
     }
-    
+
     if (media !== null && !profilePicURL) {
       setFormLoading(false);
       return setErrorMsg("Error Uploading image");
     }
 
     try {
-      const res = await axios.post('/api/v1/user', {
+      const res = await axios.post("/api/v1/user/signup", {
         user,
         profilePicURL,
       });
-  
+
       setToken(res.data);
     } catch (error) {
       const errorMsg = catchErrors(error);
       setErrorMsg(errorMsg);
     }
     setFormLoading(false);
-    
   };
 
   const handleChange = (e) => {
@@ -95,7 +103,7 @@ const signup = () => {
       setMedia(() => files[0]);
       setMediaPreview(() => URL.createObjectURL(files[0]));
     }
-    
+
     setUser((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -106,8 +114,9 @@ const signup = () => {
     try {
       const res = await axios.get(`/api/v1/user/${username}`);
       if (res.data === "Available") {
+        setErrorMsg(null)
         setUsernameAvailable(true);
-        setUser((prev) => ({ ...prev, username }));
+        setUser((prev) => ({ ...prev, username: username }));
       }
     } catch (error) {
       setErrorMsg("Username Not Available");
@@ -139,11 +148,7 @@ const signup = () => {
               handleChange={handleChange}
             />
           </div>
-        <Message 
-          error
-          content={errorMsg}
-          header="Oops!"
-        />
+          <Message error content={errorMsg} header="Oops!" />
           <Form.Input
             required
             label="Name"
@@ -189,16 +194,7 @@ const signup = () => {
             placeholder="Username"
             icon={usernameAvailable ? "check" : "close"}
             value={username}
-            onChange={(e) => {
-              setUsername(e.target.value);
-              const test = regexUsername.test(e.target.value);
-              //TODO I HAVE NO CLUE WHY THIS IS SO TEMPREMENTAL ITS DRIVING ME CRAZY
-              if (test || regexUsername.test(e.target.value)) {
-                setUsernameAvailable(true);
-              } else {
-                setUsernameAvailable(false);
-              }
-            }}
+            onChange={(e) => setUsername(e.target.value)}
             fluid
             iconPosition="left"
           />
@@ -234,3 +230,9 @@ const signup = () => {
 };
 
 export default signup;
+
+signup.getInitialProps = async (ctx) => {
+  //This will get the token back from the cookies when we pass it through the checkToken in the authUser Util
+  const pageProps = await checkToken(ctx)
+  return pageProps
+}

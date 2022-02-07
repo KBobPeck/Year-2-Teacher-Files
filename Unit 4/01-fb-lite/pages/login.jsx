@@ -7,8 +7,10 @@ import { Form, Button, Message, Segment, Divider } from "semantic-ui-react";
 import catchErrors from "./util/catchErrors";
 import { setToken } from "./util/authUser";
 import axios from "axios";
+import { checkToken } from "./util/authUser";
 
-const login = () => {
+
+const login = (pageProps) => {
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -35,7 +37,7 @@ const login = () => {
 
     setFormLoading(true);
     try {
-      const res = await axios.post(`/api/v1/auth`, {user});
+      const res = await axios.post(`/api/v1/user/login`, {user});
       setToken(res.data);
     } catch (error) {
       const errorMsg = catchErrors(error);
@@ -107,3 +109,9 @@ const login = () => {
 };
 
 export default login;
+
+login.getInitialProps = async (ctx) => {
+  //This will get the token back from the cookies when we pass it through the checkToken in the authUser Util
+  const pageProps = await checkToken(ctx)
+  return pageProps
+}

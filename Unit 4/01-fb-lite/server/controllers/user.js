@@ -1,4 +1,3 @@
-
 const UserModel = require("../models/UserModel");
 const ProfileModel = require("../models/ProfileModel");
 const FollowerModel = require("../models/FollowerModel");
@@ -7,9 +6,34 @@ const bcrypt = require("bcryptjs");
 const isEmail = require("validator/lib/isEmail");
 const URL = require("../util/defaultProfilePic");
 
-const regexUserName = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
+const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
 
-const getLoginAuth = async (req, res) => {
+
+const getUserNameAvailable = async (req, res) => {
+  const { username } = req.params;
+
+  try {
+    if (username.length < 1) return res.status(401).send("Username too Short");
+
+    const test = regexUsername.test(username);
+    //TODO I HAVE NO CLUE WHY THIS IS SO TEMPREMENTAL ITS DRIVING ME CRAZY
+    if (!(test || regexUsername.test(username))) {
+      return res.status(401).send("Username Invalid");
+    }
+
+
+    const user = await UserModel.findOne({ username: username.toLowerCase() });
+
+    if (user) return res.status(401).send("Username already taken");
+
+    return res.status(200).send("Available");
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send(`Server error`);
+  }
+};
+
+const postLoginAuth = async (req, res) => {
   const { email, password } = req.body.user;
 
   if (!isEmail(email)) return res.status(401).send("Invalid Email");
@@ -48,26 +72,8 @@ const getLoginAuth = async (req, res) => {
   }
 };
 
-const getUserNameAvailable = async (req, res) => {
-  const { username } = req.params;
-
-  try {
-    if (username.length < 1) return res.status(200).send("Username too Short");
-
-    if (!regexUserName.test(username)) return res.status(200).send("Username Invalid");
-
-    const user = await UserModel.findOne({ username: username.toLowerCase() });
-
-    if (user) return res.status(200).send("Username already taken");
-
-    return res.status(200).send("Available");
-  } catch (error) {
-    console.error(error);
-    return res.status(500).send(`Server error`);
-  }
-};
-
 const createUser = async (req, res) => {
+
   const {
     name,
     email,
@@ -144,4 +150,4 @@ const createUser = async (req, res) => {
   }
 };
 
-module.exports = {getUserNameAvailable, createUser, getLoginAuth}
+module.exports = {getUserNameAvailable, createUser, postLoginAuth}

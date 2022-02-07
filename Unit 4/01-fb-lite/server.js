@@ -3,7 +3,7 @@ const express = require("express");
 const { connectDB } = require("./server/util/connect");
 const cloudinary = require('cloudinary').v2
 require("dotenv").config();
-const fileUpload = require('express-fileupload')
+// const cors = require("cors");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,13 +24,16 @@ const nextApp = next({ dev });
 const handler = nextApp.getRequestHandler();
 
 //* MIDDLEWARES
+const fileUpload = require('express-fileupload')
+
 app.use(express.json());
+// app.use(cors())
 app.use(fileUpload({useTempFiles: true}))
 
 //*ROUTERS
 const userRoutes = require('./server/routes/userRoutes')
-const uploadRoutes = require('./server/routes/uploadRoutes')
 const authRoutes = require('./server/routes/authRoutes')
+const uploadRoutes = require('./server/routes/uploadRoutes')
 
 app.use('/api/v1/user', userRoutes)
 app.use('/api/v1/auth', authRoutes)

@@ -2,7 +2,8 @@
 
 ---
 
-## Part 1 - setting up the layout
+# Part 1 - Start / Signup / Login
+---
 
 - npx create-next-app@latest
 - added server folder
@@ -22,9 +23,10 @@ _when using the semUI on the navbar the buttons will appear off center. This is 
 
 _The nprogess css is avaible online and there is a link to us on their git hub, you can customize the look of the bar very easily by editing the css file_
 
----
 
-## Part 2 - login / signup layout
+
+## login / signup layout
+---
 
 - created the components / common folder
 - created WelcomeMessage
@@ -42,6 +44,7 @@ const login = () => {
 ```
 
 ### signup.js
+---
 
 create the following states I left out all the Socials links in the state at first and added those later
 
@@ -78,6 +81,7 @@ once the states are created then we can work on the form
 _currently there is a very large error that appears in the console. This happens because about 2 weeks ago react updated and you can no longer useRef in react.strictmode (no idea why) apparently there is something called refForwarding where you React.createRef() and then pass that on but I spent too much time trying to fix it already. I may try and come back to this. AHHHHHHHHH I just found it by accident after hours of trying... in the next.config.js there is strictmore setting. just make it false... fixed... but I still feel empty inside_
 
 ### login.js
+---
 
 - this is a lot simpler, you can just copy paste most the things you need from the sign up, all you need here is the email and password though
 - for now, just like sign up, we are going to just prevent default on submit, we will deal with the validation junk later
@@ -86,7 +90,8 @@ _currently there is a very large error that appears in the console. This happens
   - I had the handle submit change the error message so that no matter what there was an error, just to show off how it works. we can change this back later when we are done
 - the password has an eye that you can click on to show/hide the password
 
-## Part 3 MongoDB setup
+## MongoDB setup
+---
 
 - models/usermodel is next
   - we add a bunch of unread or new objects here to help with layouts later
@@ -101,3 +106,47 @@ _for the API, there is a folder in the pages that work very well for getting inf
 `REFACTOR INCOMING`
 
 _once again I return, heart void of contentment. For the error was so easy and I sent so much time on it that no answer would make me whole again... It's "GET" not "get" and "POST" not "post". I am off to commit sudoku as my ancestors did before me... perhaps the simplicity of 1-9 numbers will help to soften the saddness inside_
+
+- OK I refactored all the routes into a seperate folder, this should be closer to what we were doing in the node  unit
+- added controllers and routers to the server file
+- fixed up the server.js with the cloudinary that we need and the fileuploader that we need
+- at this point you should be able to upload a profile pic and a user to the db/cloudiary and then login with any of the accounts you made. 
+
+- I created a snap shot zip of the program so far in the projects section. Im call it Social Media Part 1
+---
+# Part 2 Home Page
+---
+
+## get initial props
+
+- created index.jsx and added the getInitialProps to index and _app.js
+  - getInitialProps is the way that next handles a context file, making it easier for us to use information all around the app
+- there is a large commented out section that I used for practice and to show some things that the context can do
+
+## auth middleware
+- moved around the controllers and the routers a little to have them make more sense
+- made the middleware folder where we are going to do auth work 
+- imported the middleware auth to server.js
+- added the authMiddleware to the Auth route
+
+- once everything is added you can do testing in postman
+
+- use the sign up page to get a token
+
+_post: localhost:3000/api/v1/auth/login_
+
+`{
+    "user": {
+        "email": "email@test.com",
+        "password": "password"
+    }
+}`
+- get the token from the response
+
+_get: lcoalhost:3000/api/v1/auth_
+
+- with headers Authorization : Bearer {{TOKEN}}
+- you will get the user and the followers back in this request. NOTE: you won't get the password back in the user object. 
+
+
+whoo boy... this was also rough to figure out. We can add a checkAuth function to the getInitialProps on anypage that we want to run it on. since I added a check in there that will redirect you away from the login if you are already loggin in, then I would add it to EVERY page, we are going to add a log out button later that they can use to change accounts
