@@ -5,13 +5,15 @@ const cloudinary = require('cloudinary').v2
 require("dotenv").config();
 // const cors = require("cors");
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+require("dotenv").config();
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUD_KEY,
   api_secret: process.env.CLOUD_SECRET,
 });
+
+const app = express();
+const PORT = process.env.PORT || 3000;
 
 //* NEXT APP SETUP
 //! imports tools from the next library
@@ -35,16 +37,13 @@ const userRoutes = require('./server/routes/userRoutes')
 const authRoutes = require('./server/routes/authRoutes')
 const uploadRoutes = require('./server/routes/uploadRoutes')
 
-app.use('/api/v1/user', userRoutes)
-app.use('/api/v1/auth', authRoutes)
-app.use('/api/v1/uploads', uploadRoutes)
+app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/uploads", uploadRoutes);
 
 connectDB();
 
 nextApp.prepare().then(() => {
-  //*ROUTING */
-  // app.use("/api/hello", require("pages/api/hello"));
-
   app.all("*", (req, res) => handler(req, res));
   app.listen(PORT, (err) => {
     if (err) console.log(err);

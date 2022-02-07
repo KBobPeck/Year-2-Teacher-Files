@@ -8,7 +8,9 @@ import { destroyCookie, parseCookies } from "nookies";
 export const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/gim;
 
 export const setToken = (token) => {
+  //adds a cookie to the browser so the user can be authed
   cookie.set("token", token);
+  //This forces the page to change back to home page if everything went right and there was a token issued
   Router.push("/");
 };
 

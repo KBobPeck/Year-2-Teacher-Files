@@ -21,6 +21,11 @@ function ImageDropDiv({
             onChange={handleChange}
             name="media"
             ref={inputRef}
+            onInput={(e) => {
+              const droppedFile = Array.from(e.target.files);
+              setMedia(droppedFile[0]);
+              setMediaPreview(URL.createObjectURL(droppedFile[0]));
+            }}
           />
 
           <div
@@ -42,6 +47,8 @@ function ImageDropDiv({
               setMedia(droppedFile[0]);
               setMediaPreview(URL.createObjectURL(droppedFile[0]));
             }}
+            onClick={() => inputRef.current.click()}
+            style={{ cursor: "pointer" }}
           >
             {mediaPreview === null ? (
               <>
@@ -51,11 +58,7 @@ function ImageDropDiv({
                   basic
                 >
                   <Header icon>
-                    <Icon
-                      name="file image outline"
-                      style={{ cursor: "pointer" }}
-                      onClick={() => inputRef.current.click()}
-                    />
+                    <Icon name="file image outline" />
                     Drag n Drop or Click To Upload Image
                   </Header>
                 </Segment>

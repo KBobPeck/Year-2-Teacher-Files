@@ -14,9 +14,15 @@ import {
 import CommonInputs from "./components/Common/CommonSocials";
 import ImageDropDiv from "./components/Common/ImageDropDiv";
 import axios from "axios";
+<<<<<<< HEAD
 import {setToken } from "./util/authUser";
+=======
+import { setToken } from "./util/authUser";
+>>>>>>> 11c42ab7df27b30525ab0b3851d26179b6adba2b
 import catchErrors from "./util/catchErrors";
 import { checkToken } from "./util/authUser";
+
+let cancel;
 
 const signup = () => {
   const [user, setUser] = useState({
@@ -50,7 +56,7 @@ const signup = () => {
 
   //* USE EFFECTS
   useEffect(() => {
-    setSubmitDisabled(!(name && email && password && username));
+    setSubmitDisabled(!(name && bio && email && password && username));
   }, [user, username]);
 
   useEffect(() => {
@@ -110,9 +116,16 @@ const signup = () => {
   //* FUNCTIONS *
 
   const checkUsername = async () => {
+    const cancelToken = axios.CancelToken;
     setUsernameLoading(true);
     try {
-      const res = await axios.get(`/api/v1/user/${username}`);
+      cancel && cancel();
+
+      const res = await axios.get(`/api/v1/user/${username}`, {
+        cancelToken: new cancelToken((canceler) => {
+          cancel = canceler;
+        }),
+      });
       if (res.data === "Available") {
         setErrorMsg(null)
         setUsernameAvailable(true);

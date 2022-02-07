@@ -1,8 +1,8 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
-const {uploadProductImage} = require('../controllers/uploadPicToCloudinary')
+const { uploadProfilePic } = require("../controllers/uploadPicToCloudinary");
 
-router.route('/').post(uploadProductImage)
+router.route("/").post(uploadProfilePic);
 
-module.exports = router
+module.exports = router;
