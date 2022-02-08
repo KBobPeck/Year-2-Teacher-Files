@@ -8,8 +8,8 @@ const getUserAuth = async (req, res) => {
 
   try {
     const user = await UserModel.findById(userId)
-    const followers = await FollowerModel.findOne({user:userId})
-    return res.status(200).json({user, followers})
+    const followStats = await FollowerModel.findOne({user:userId})
+    return res.status(200).json({user, followStats})
 
   } catch (error) {
     console.log(error);

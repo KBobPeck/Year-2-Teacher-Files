@@ -150,3 +150,16 @@ _get: lcoalhost:3000/api/v1/auth_
 
 
 whoo boy... this was also rough to figure out. We can add a checkAuth function to the getInitialProps on anypage that we want to run it on. since I added a check in there that will redirect you away from the login if you are already loggin in, then I would add it to EVERY page, we are going to add a log out button later that they can use to change accounts
+
+now that I spent a while on it I refactored again, you can instead just add this ONCE to the _app.js page and it will work on EVERY page in the app. treat this like a globalContext page from react
+
+alright, breather here. the authing in the _app was a lot to understand with all of the context. I would take it slow and have them do a small example with another jsonplaceholder I used [todos](https://jsonplaceholder.typicode.com/todos) and had them build on the index content with coloring from semantic based on complete or not
+
+---
+
+## index styling time
+
+#### this is where we are going to create all of the junk inside of the index
+
+- the layout will be a 3 column grid. a navbar, the content, and a search bar
+- just create a sideMenu and a search component in your files and then put some placehodler text. then go back to the layout component and add them
