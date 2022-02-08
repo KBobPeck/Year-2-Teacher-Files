@@ -5,6 +5,8 @@ import Navbar from "./Navbar";
 import { Container, Grid } from "semantic-ui-react";
 import nprogress from "nprogress";
 import Router from "next/router";
+import SideMenu from "./SideMenu";
+import Search from "./Search";
 
 function Layout({ children }) {
   //! nprogress is an easy way to create loading bars on your page,
@@ -19,15 +21,7 @@ function Layout({ children }) {
       <HeadTags />
       <Navbar />
       <Container text>
-        {/* <Grid
-          // textAlign="center"
-          style={{ minHeight: "calc(100vh - 55px)" }}
-          verticalAlign="middle"
-        >
-          <Grid.Column> */}
         {children}
-        {/* </Grid.Column>
-        </Grid> */}
       </Container>
     </>
   );

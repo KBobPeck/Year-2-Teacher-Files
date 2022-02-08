@@ -1,15 +1,23 @@
-import React from "react";
-import { Divider } from "semantic-ui-react";
-import { checkToken } from "./util/authUser";
 
 //!below will render the to home page
-//!the props are automatically added from the getInitialProps similar to the context file
-const index = ({ user, followers, ctx }) => {
 
-  console.log(user, followers);
+import { useEffect } from "react";
+
+//!the props are automatically added from the getInitialProps similar to the context file
+const index = ({ user, followStats }) => {
+  // this is to see the objects and make sure they are working. notice that there is no password in the user object by default
+  // console.log(user, followStats);
+
+  useEffect(()=>{
+    document.title = `Welcome, ${user.name.split(' ')[0]}`
+  },[])
 
   return <div>Home Page</div>
-  
+}
+
+export default index;
+
+// const index = ({ posts }) => {
   // return (
   //   <div>
   //     {posts &&
@@ -25,17 +33,17 @@ const index = ({ user, followers, ctx }) => {
   //       })}
   //   </div>
   // );
-};
+// };
 
-//!ctx is a poperty in the appContext
+//!ctx is a poperty in the appContext. it can be thought of as the page context. meaning it has the entire req object for the page and all the props and all the other objects like cookies and authorization
 //!getInitialProps MUST ALWAYS return an object
-index.getInitialProps = async (ctx) => {
+// index.getInitialProps = async (ctx) => {
   //This will get the token back from the cookies when we pass it through the checkToken in the authUser Util
-  const pageProps = await checkToken(ctx)
+  // const pageProps = await checkToken(ctx)
   //this will let you see the pageprops to make sure everything is working nicely
   // console.log("getinitialprops",pageProps);
   // this adds the user and followers from the auth to the pageprops so we can destructure
-  return {...pageProps}
+  // return {...pageProps}
 
   // try {
   //   //! this is a website that stores lots of dummy data that we can use to practice at first.
@@ -47,8 +55,4 @@ index.getInitialProps = async (ctx) => {
   // } catch (error) {
   //   return { errorLoading: true };
   // }
-};
-
-
-
-export default index;
+// };
