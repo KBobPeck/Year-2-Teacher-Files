@@ -14,7 +14,7 @@ import {
 import CommonInputs from "./components/Common/CommonSocials";
 import ImageDropDiv from "./components/Common/ImageDropDiv";
 import axios from "axios";
-import {setToken } from "./util/authUser";
+import { setToken } from "./util/authUser";
 import catchErrors from "./util/catchErrors";
 import { checkToken } from "./util/authUser";
 
@@ -112,18 +112,18 @@ const signup = () => {
   //* FUNCTIONS *
 
   const checkUsername = async () => {
-    const cancelToken = axios.CancelToken;
+    // const cancelToken = axios.CancelToken;
     setUsernameLoading(true);
     try {
       cancel && cancel();
 
       const res = await axios.get(`/api/v1/user/${username}`, {
-        cancelToken: new cancelToken((canceler) => {
+        cancelToken: new axios.CancelToken((canceler) => {
           cancel = canceler;
         }),
       });
       if (res.data === "Available") {
-        setErrorMsg(null)
+        setErrorMsg(null);
         setUsernameAvailable(true);
         setUser((prev) => ({ ...prev, username: username }));
       }
@@ -242,6 +242,6 @@ export default signup;
 
 signup.getInitialProps = async (ctx) => {
   //This will get the token back from the cookies when we pass it through the checkToken in the authUser Util
-  const pageProps = await checkToken(ctx)
-  return pageProps
-}
+  const pageProps = await checkToken(ctx);
+  return pageProps;
+};

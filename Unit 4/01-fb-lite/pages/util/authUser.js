@@ -24,7 +24,7 @@ export const redirectUser = (ctx, location) => {
 };
 
 export const checkToken = async (ctx) => {
-  const {token} = parseCookies(ctx)
+  const { token } = parseCookies(ctx);
   let pageProps = {};
 
   // we get the token
@@ -36,30 +36,28 @@ export const checkToken = async (ctx) => {
   if (!token) {
     protectedRoutes && redirectUser(ctx, "/login");
   } else {
-
     try {
-      const response = await axios.get('/api/v1/auth', {
-        headers:{
-          Authorization: `Bearer ${token}`
-        }
-      })
+      const response = await axios.get("/api/v1/auth", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      const {user, followers} = response.data
+      const { user, followers } = response.data;
 
-      if(user) {
+      if (user) {
         //if the user is sent to login or signup while they still have an active token then they will be sent to the home page
-        !protectedRoutes && redirectUser(ctx, '/');
+        !protectedRoutes && redirectUser(ctx, "/");
       }
 
       pageProps.user = user;
-      pageProps.followers = followers
-
+      pageProps.followers = followers;
     } catch (error) {
       // console.log(error);
-      destroyCookie(ctx, "token");
+      // destroyCookie(ctx, "token");
       redirectUser(ctx, "/login");
     }
   }
 
-  return pageProps
+  return pageProps;
 };
