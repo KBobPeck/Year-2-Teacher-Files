@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 
 const auth = async (req, res, next) => {
-
   try {
     if (
       !req.headers.authorization ||
@@ -10,15 +9,14 @@ const auth = async (req, res, next) => {
       return res.status(401).send("unauthorized");
     }
 
-    const token = req.headers.authorization.split(' ')[1]
+    const token = req.headers.authorization.split(" ")[1];
 
     //returned from the payload attached to the token
-    const {userId} = jwt.verify(token, process.env.JWT_SECRET)
+    const { userId } = jwt.verify(token, process.env.JWT_SECRET);
 
-    req.userId = userId
+    req.userId = userId;
 
-    next()
-
+    next();
   } catch (error) {
     console.log(error);
     return res.status(401).send("unauthorized");

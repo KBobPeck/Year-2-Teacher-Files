@@ -22,44 +22,37 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
   const { token } = parseCookies(ctx);
   let pageProps = {};
 
-  const protectedArray = [
-    "/",
-    "/[username]",
-    "/notifications",
-    "/post/[postId]",
-    "/messages",
-    "/search",
-  ];
+  const protectedArray = ["/"];
 
   const protectedRoute = protectedArray.includes(ctx.pathname);
 
-  if (!token && protectedRoute) {
-    redirectUser(ctx, "/login");
+  //if we do not have a token and we are on a page that we shouldn't be, get redirected to login
+  if (!token) {
+    protectedRoute && redirectUser(ctx, "/login");
   } else {
-    if(Component.getInitialProps) {
+    if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx);
     }
     try {
       //! you need to include the baseURL or the cookies wont save properly and will be deleted on refresh
       const res = await axios.get(`${baseUrl}/api/v1/auth`, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      const {user, followStats} = res.data
+      const { user, followStats } = res.data;
 
-      if(user && !protectedRoute) redirectUser (ctx, '/')
+      if (user) !protectedRoute && redirectUser(ctx, "/");
 
       pageProps.user = user;
-      pageProps.followStats = followStats
-
+      pageProps.followStats = followStats;
     } catch (error) {
-      destroyCookie(ctx, "token")
-      redirectUser(ctx, '/login')
+      destroyCookie(ctx, "token");
+      redirectUser(ctx, "/login");
     }
   }
-  return {pageProps}
+  return { pageProps };
 };
 
 export default MyApp;
