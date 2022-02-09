@@ -4,10 +4,12 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { logoutUser } from "../../utils/authUser";
 
-function SideMenu({ user: { unreadNotification, email, unreadMessage, username } }) {
+function SideMenu({
+  user: { unreadNotification, email, unreadMessage, username },
+}) {
   const router = useRouter();
 
-  const isActive = route => router.pathname === route;
+  const isActive = (route) => router.pathname === route;
 
   return (
     <>
@@ -15,7 +17,8 @@ function SideMenu({ user: { unreadNotification, email, unreadMessage, username }
         style={{ paddingTop: "1rem" }}
         size="big"
         verticalAlign="middle"
-        selection>
+        selection
+      >
         <Link href="/">
           <List.Item active={isActive("/")}>
             <Icon name="home" size="large" color={isActive("/") && "teal"} />

@@ -8,6 +8,8 @@ import catchErrors from "./util/catchErrors";
 import { setToken } from "./util/authUser";
 import axios from "axios";
 import { checkToken } from "./util/authUser";
+import { parseCookies } from "nookies";
+import Cookies from "js-cookie";
 
 
 const login = (pageProps) => {
@@ -16,21 +18,33 @@ const login = (pageProps) => {
     password: "",
   });
 
+  //* states / variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   const { email, password } = user;
   const [showPassword, setShowPassword] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
   const [formLoading, setFormLoading] = useState(false);
   const [submitDisabled, setSubmitDisabled] = useState(true);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser((prev) => ({ ...prev, [name]: value }));
-  };
 
+  
+  //* useEffects~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //! checks to see if fields have been filled
   useEffect(() => {
     setSubmitDisabled(!(email && password));
   }, [user]);
+
+  useEffect(() => {
+    document.title = 'welcome back!'
+    const userEmail = Cookies.get('userEmail')
+    if(userEmail) setUser((prev) => ({...prev, email: userEmail}))
+  },[])
+  
+  
+  //* handlers ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUser((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();

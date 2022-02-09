@@ -1,11 +1,13 @@
-import { useRouter } from "next/router";
+import React from "react";
 import { List, Icon } from "semantic-ui-react";
 import Link from "next/link";
-import { logoutUser } from "../../util/authUser";
+import { useRouter } from "next/router";
+import { logoutUser } from "../../utils/authUser";
 
-const SideMenu = ({user:{unreadNotification, email, unreadMessage, username}}) => {
+function SideMenu({ user: { unreadNotification, email, unreadMessage, username } }) {
   const router = useRouter();
-  const isActive = (route) => router.pathname === route;
+
+  const isActive = route => router.pathname === route;
 
   return (
     <>
@@ -13,11 +15,10 @@ const SideMenu = ({user:{unreadNotification, email, unreadMessage, username}}) =
         style={{ paddingTop: "1rem" }}
         size="big"
         verticalAlign="middle"
-        selection
-      >
+        selection>
         <Link href="/">
           <List.Item active={isActive("/")}>
-            <Icon name="home" size="large" color={isActive("/") && "teal" || undefined } />
+            <Icon name="home" size="large" color={isActive("/") && "teal"} />
             <List.Content>
               <List.Header content="Home" />
             </List.Content>
@@ -31,7 +32,7 @@ const SideMenu = ({user:{unreadNotification, email, unreadMessage, username}}) =
               name={unreadMessage ? "hand point right" : "mail outline"}
               size="large"
               color={
-                (isActive("/messages") && "teal") || (unreadMessage && "orange") || undefined
+                (isActive("/messages") && "teal") || (unreadMessage && "orange")
               }
             />
             <List.Content>
@@ -48,7 +49,7 @@ const SideMenu = ({user:{unreadNotification, email, unreadMessage, username}}) =
               size="large"
               color={
                 (isActive("/notifications") && "teal") ||
-                (unreadNotification && "orange") || undefined
+                (unreadNotification && "orange")
               }
             />
             <List.Content>
@@ -63,7 +64,7 @@ const SideMenu = ({user:{unreadNotification, email, unreadMessage, username}}) =
             <Icon
               name="user"
               size="large"
-              color={router.query.username === username && "teal" || undefined}
+              color={router.query.username === username && "teal"}
             />
             <List.Content>
               <List.Header content="Account" />
@@ -81,6 +82,6 @@ const SideMenu = ({user:{unreadNotification, email, unreadMessage, username}}) =
       </List>
     </>
   );
-};
+}
 
 export default SideMenu;

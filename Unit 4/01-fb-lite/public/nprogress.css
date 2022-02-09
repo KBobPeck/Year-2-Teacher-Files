@@ -7,7 +7,7 @@
 
   position: fixed;
   z-index: 1031;
-  top: 50px;
+  top: 0px;
   left: 0;
   background-color: rgb(87, 207, 207);
 
@@ -21,7 +21,7 @@
   right: 0px;
   width: 100px;
   height: 100%;
-  /* box-shadow: 0 0 10px var(--progressBar), 0 0 5px var(--progressBar); */
+  box-shadow: 0 0 10px var(--progressBar), 0 0 5px var(--progressBar);
   opacity: 1;
 
   -webkit-transform: rotate(3deg) translate(0px, -4px);

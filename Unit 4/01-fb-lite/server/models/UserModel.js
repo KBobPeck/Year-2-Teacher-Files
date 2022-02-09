@@ -30,7 +30,7 @@ const UserSchema = new mongoose.Schema(
     },
     unreadMessage: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     unreadNotification: {
       type: Boolean,

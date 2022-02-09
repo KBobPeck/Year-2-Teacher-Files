@@ -13,7 +13,7 @@ import {
 import nprogress from "nprogress";
 import Router from "next/router";
 import SideMenu from "./SideMenu";
-import Search from "./Search";
+import SearchComponent from "./SearchComponent";
 
 function Layout({ children, user }) {
   //! nprogress is an easy way to create loading bars on your page,
@@ -28,6 +28,7 @@ function Layout({ children, user }) {
   //createRef will update the reference every re-render and not just on refresh since we want this site to be live we need a ref that will update
   const contextRef = createRef();
 
+
   return (
     <>
       <HeadTags />
@@ -37,19 +38,17 @@ function Layout({ children, user }) {
             <Ref innerRef={contextRef}>
               <Grid>
                 <Grid.Column floated="left" width={2}>
-                  {/* we wrap in stick to make the column non scrollable */}
                   <Sticky context={contextRef}>
                     <SideMenu user={user} />
                   </Sticky>
                 </Grid.Column>
                 <Grid.Column width={10}>
-                  {/* we wrap in visibility to make the colum scrollable */}
                   <Visibility context={contextRef}>{children}</Visibility>
                 </Grid.Column>
-                <Grid.Column>
+                <Grid.Column floated="left" width={4}>
                   <Sticky context={contextRef}>
                     <Segment basic>
-                      <Search />
+                      <SearchComponent />
                     </Segment>
                   </Sticky>
                 </Grid.Column>

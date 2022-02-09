@@ -1,10 +1,6 @@
 import Router from "next/router";
 import cookie from "js-cookie";
-import axios from "axios";
-import catchErrors from "./catchErrors";
-import { Component } from "react";
-import { destroyCookie, parseCookies } from "nookies";
-import baseUrl from "./baseUrl";
+
 
 export const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/gim;
 
@@ -23,6 +19,13 @@ export const redirectUser = (ctx, location) => {
     Router.push(location);
   }
 };
+
+export const logoutUser = (email) => {
+  cookie.set("userEmail", email)
+  cookie.remove('token');
+  Router.push('/login')
+  Router.reload()
+}
 
 //!THIS IS THE EXAMPLE THAT I HAD ON THE INDEX PAGE!
 //!IF YOU WANT TO USE THIS EXAMPLE THEN BY ALL MEANS PLEASE DO!

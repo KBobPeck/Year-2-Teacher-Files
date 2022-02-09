@@ -3,7 +3,6 @@ const express = require("express");
 const { connectDB } = require("./server/util/connect");
 const cloudinary = require('cloudinary').v2
 require("dotenv").config();
-// const cors = require("cors");
 
 require("dotenv").config();
 cloudinary.config({
@@ -29,17 +28,20 @@ const handler = nextApp.getRequestHandler();
 const fileUpload = require('express-fileupload')
 
 app.use(express.json());
-// app.use(cors())
 app.use(fileUpload({useTempFiles: true}))
 
 //*ROUTERS
 const userRoutes = require('./server/routes/userRoutes')
 const authRoutes = require('./server/routes/authRoutes')
 const uploadRoutes = require('./server/routes/uploadRoutes')
+const searchRoutes = require('./server/routes/search')
 
+//? alternative way to route if you prefer
+// app.use("/api/v1/user", require('./server/routes/userRoutes'));
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/uploads", uploadRoutes);
+app.use("/api/v1/search", searchRoutes);
 
 connectDB();
 

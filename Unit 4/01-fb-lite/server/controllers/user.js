@@ -8,7 +8,6 @@ const URL = require("../util/defaultProfilePic");
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
 
-
 const getUserNameAvailable = async (req, res) => {
   const { username } = req.params;
 
