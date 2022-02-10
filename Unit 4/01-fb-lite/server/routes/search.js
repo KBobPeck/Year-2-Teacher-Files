@@ -1,7 +1,7 @@
-const router = require('express').Router()
-const authMiddleware = require('../middleware/authMiddleware')
-const {searchUsers} = require('../controllers/search')
+const router = require("express").Router();
+const authMiddleware = require("../middleware/authMiddleware");
+const { searchUsers } = require("../controllers/search");
 
-router.route('/').get(authMiddleware, searchUsers)
+router.route("/:searchText").get(authMiddleware, searchUsers);
 
-module.exports = router
+module.exports = router;
