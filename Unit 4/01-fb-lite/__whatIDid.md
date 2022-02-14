@@ -163,3 +163,8 @@ alright, breather here. the authing in the _app was a lot to understand with all
 
 - the layout will be a 3 column grid. a navbar, the content, and a search bar
 - just create a sideMenu and a search component in your files and then put some placehodler text. then go back to the layout component and add them
+
+
+## posts
+- postmodel
+- post controllers, routes, server.
