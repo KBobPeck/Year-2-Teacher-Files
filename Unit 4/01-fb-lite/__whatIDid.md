@@ -173,6 +173,7 @@ since you should already have the get initial props on your \_app and you are re
 - search component requires a new controller and route called search that will find an array of all the users with that name
 - hopefully at this point you have a working left side and right side of your site with a middle that holds the homepage.
 
-## home page
+## posts
 
-- first we name the post model
+- postmodel
+- post controllers, routes, server.
