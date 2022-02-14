@@ -3,6 +3,7 @@
 ---
 
 # Part 1 - Start / Signup / Login
+
 ---
 
 - npx create-next-app@latest
@@ -23,9 +24,8 @@ _when using the semUI on the navbar the buttons will appear off center. This is 
 
 _The nprogess css is avaible online and there is a link to us on their git hub, you can customize the look of the bar very easily by editing the css file_
 
-
-
 ## login / signup layout
+
 ---
 
 - created the components / common folder
@@ -44,6 +44,7 @@ const login = () => {
 ```
 
 ### signup.js
+
 ---
 
 create the following states I left out all the Socials links in the state at first and added those later
@@ -81,6 +82,7 @@ once the states are created then we can work on the form
 _currently there is a very large error that appears in the console. This happens because about 2 weeks ago react updated and you can no longer useRef in react.strictmode (no idea why) apparently there is something called refForwarding where you React.createRef() and then pass that on but I spent too much time trying to fix it already. I may try and come back to this. AHHHHHHHHH I just found it by accident after hours of trying... in the next.config.js there is strictmore setting. just make it false... fixed... but I still feel empty inside_
 
 ### login.js
+
 ---
 
 - this is a lot simpler, you can just copy paste most the things you need from the sign up, all you need here is the email and password though
@@ -91,6 +93,7 @@ _currently there is a very large error that appears in the console. This happens
 - the password has an eye that you can click on to show/hide the password
 
 ## MongoDB setup
+
 ---
 
 - models/usermodel is next
@@ -107,25 +110,29 @@ _for the API, there is a folder in the pages that work very well for getting inf
 
 _once again I return, heart void of contentment. For the error was so easy and I sent so much time on it that no answer would make me whole again... It's "GET" not "get" and "POST" not "post". I am off to commit sudoku as my ancestors did before me... perhaps the simplicity of 1-9 numbers will help to soften the saddness inside_
 
-- OK I refactored all the routes into a seperate folder, this should be closer to what we were doing in the node  unit
+- OK I refactored all the routes into a seperate folder, this should be closer to what we were doing in the node unit
 - added controllers and routers to the server file
 - fixed up the server.js with the cloudinary that we need and the fileuploader that we need
-- at this point you should be able to upload a profile pic and a user to the db/cloudiary and then login with any of the accounts you made. 
+- at this point you should be able to upload a profile pic and a user to the db/cloudiary and then login with any of the accounts you made.
 
 - I created a snap shot zip of the program so far in the projects section. Im call it Social Media Part 1
+
 ---
+
 # Part 2 Home Page
+
 ---
 
 ## get initial props
 
-- created index.jsx and added the getInitialProps to index and _app.js
+- created index.jsx and added the getInitialProps to index and \_app.js
   - getInitialProps is the way that next handles a context file, making it easier for us to use information all around the app
 - there is a large commented out section that I used for practice and to show some things that the context can do
 
 ## auth middleware
+
 - moved around the controllers and the routers a little to have them make more sense
-- made the middleware folder where we are going to do auth work 
+- made the middleware folder where we are going to do auth work
 - imported the middleware auth to server.js
 - added the authMiddleware to the Auth route
 
@@ -135,25 +142,20 @@ _once again I return, heart void of contentment. For the error was so easy and I
 
 _post: localhost:3000/api/v1/auth/login_
 
-`{
-    "user": {
-        "email": "email@test.com",
-        "password": "password"
-    }
-}`
+`{ "user": { "email": "email@test.com", "password": "password" } }`
+
 - get the token from the response
 
 _get: lcoalhost:3000/api/v1/auth_
 
 - with headers Authorization : Bearer {{TOKEN}}
-- you will get the user and the followers back in this request. NOTE: you won't get the password back in the user object. 
-
+- you will get the user and the followers back in this request. NOTE: you won't get the password back in the user object.
 
 whoo boy... this was also rough to figure out. We can add a checkAuth function to the getInitialProps on anypage that we want to run it on. since I added a check in there that will redirect you away from the login if you are already loggin in, then I would add it to EVERY page, we are going to add a log out button later that they can use to change accounts
 
-now that I spent a while on it I refactored again, you can instead just add this ONCE to the _app.js page and it will work on EVERY page in the app. treat this like a globalContext page from react
+now that I spent a while on it I refactored again, you can instead just add this ONCE to the \_app.js page and it will work on EVERY page in the app. treat this like a globalContext page from react
 
-alright, breather here. the authing in the _app was a lot to understand with all of the context. I would take it slow and have them do a small example with another jsonplaceholder I used [todos](https://jsonplaceholder.typicode.com/todos) and had them build on the index content with coloring from semantic based on complete or not
+alright, breather here. the authing in the \_app was a lot to understand with all of the context. I would take it slow and have them do a small example with another jsonplaceholder I used [todos](https://jsonplaceholder.typicode.com/todos) and had them build on the index content with coloring from semantic based on complete or not
 
 ---
 
@@ -163,3 +165,14 @@ alright, breather here. the authing in the _app was a lot to understand with all
 
 - the layout will be a 3 column grid. a navbar, the content, and a search bar
 - just create a sideMenu and a search component in your files and then put some placehodler text. then go back to the layout component and add them
+
+if the placeholder text isnt showing up it is because you need to pass pageProps.user into the layout in \_app.js
+since you should already have the get initial props on your \_app and you are returning pageprops with the user in it then it should be simple to get the user in your layout =) This is how next.js handle global context
+
+- once you can see the 3 colums of text, build out the sidemenu and the searchcomponents
+- search component requires a new controller and route called search that will find an array of all the users with that name
+- hopefully at this point you have a working left side and right side of your site with a middle that holds the homepage.
+
+## home page
+
+- first we name the post model
