@@ -1,9 +1,5 @@
-const express = require("express");
-const router = express.Router();
-const authMiddleware = require("../middleware/authMiddleware");
 const UserModel = require("../models/UserModel");
 const PostModel = require("../models/PostModel");
-const FollowerModel = require("../models/FollowerModel");
 const uuid = require("uuid").v4;
 
 // CREATE A POST
@@ -50,6 +46,7 @@ const getAllPosts = async (req, res) => {
       posts = await PostModel.find()
         .limit(size)
         .sort({ createdAt: -1 })
+        //populate takes the value and fills it with an object of that ref. Normally we just get an _id that we save so we can see the user anytime. This requires an extra pull and if we use that method on something like comments then we will need to make 2 or 3 pulls to get all the information. instead we can just populate the user section with the user information in the same request, and it will return both things in 1 request.
         .populate("user")
         .populate("comments.user");
     }
@@ -84,7 +81,7 @@ const getPostById = async (req, res) => {
       return res.status(404).send("Post not found");
     }
 
-    return res.json(post);
+    return res.status(200).json(post);
   } catch (error) {
     console.error(error);
     return res.status(500).send(`Server error`);

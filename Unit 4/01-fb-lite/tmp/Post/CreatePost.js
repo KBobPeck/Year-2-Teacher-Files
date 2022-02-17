@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Form, Button, Image, Divider, Message, Icon } from "semantic-ui-react";
-import { submitNewPost } from "../../util/postActions";
-import axios from "axios";
+import uploadPic from "../../utils/uploadPicToCloudinary";
+import { submitNewPost } from "../../utils/postActions";
 
 function CreatePost({ user, setPosts }) {
   const [newPost, setNewPost] = useState({ text: "", location: "" });
@@ -14,7 +14,7 @@ function CreatePost({ user, setPosts }) {
   const [media, setMedia] = useState(null);
   const [mediaPreview, setMediaPreview] = useState(null);
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value, files } = e.target;
 
     if (name === "media") {
@@ -22,7 +22,7 @@ function CreatePost({ user, setPosts }) {
       setMediaPreview(URL.createObjectURL(files[0]));
     }
 
-    setNewPost((prev) => ({ ...prev, [name]: value }));
+    setNewPost(prev => ({ ...prev, [name]: value }));
   };
 
   const addStyles = () => ({
@@ -32,23 +32,20 @@ function CreatePost({ user, setPosts }) {
     border: "dotted",
     paddingTop: media === null && "60px",
     cursor: "pointer",
-    borderColor: highlighted ? "green" : "black",
+    borderColor: highlighted ? "green" : "black"
   });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     setLoading(true);
     let picUrl;
 
     if (media !== null) {
-      const formData = new FormData();
-      formData.append("image", media, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      const res = await axios.post("/api/v1/uploads", formData);
-      picUrl = res.data.src;
+      picUrl = await uploadPic(media);
+      if (!picUrl) {
+        setLoading(false);
+        return setError("Error Uploading Image");
+      }
     }
 
     await submitNewPost(
@@ -110,15 +107,15 @@ function CreatePost({ user, setPosts }) {
         <div
           onClick={() => inputRef.current.click()}
           style={addStyles()}
-          onDrag={(e) => {
+          onDrag={e => {
             e.preventDefault();
             setHighlighted(true);
           }}
-          onDragLeave={(e) => {
+          onDragLeave={e => {
             e.preventDefault();
             setHighlighted(false);
           }}
-          onDrop={(e) => {
+          onDrop={e => {
             e.preventDefault();
             setHighlighted(true);
 
@@ -126,8 +123,7 @@ function CreatePost({ user, setPosts }) {
 
             setMedia(droppedFile[0]);
             setMediaPreview(URL.createObjectURL(droppedFile[0]));
-          }}
-        >
+          }}>
           {media === null ? (
             <Icon name="plus" size="big" />
           ) : (

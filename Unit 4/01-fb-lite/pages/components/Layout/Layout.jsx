@@ -28,13 +28,18 @@ function Layout({ children, user }) {
   //createRef will update the reference every re-render and not just on refresh since we want this site to be live we need a ref that will update
   const contextRef = createRef();
 
-
   return (
     <>
       <HeadTags />
       {user ? (
         <>
-          <div style={{ marginLeft: "1rem", marginRight: "1rem" }}>
+          <div
+            style={{
+              marginTop: "2rem",
+              marginLeft: "1rem",
+              marginRight: "1rem",
+            }}
+          >
             <Ref innerRef={contextRef}>
               <Grid>
                 <Grid.Column floated="left" width={2}>

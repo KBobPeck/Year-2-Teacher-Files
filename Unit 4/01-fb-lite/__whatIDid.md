@@ -177,3 +177,12 @@ since you should already have the get initial props on your \_app and you are re
 
 - postmodel
 - post controllers, routes, server.
+- as you are working on this I would test the routes with postman to make sure you are getting back the right data
+
+- I added the post folder in components but I did not add any content just place holder text
+  ```javascript
+  return <div>CardPost</div>;
+  ```
+- same for no data in layout
+- then built out the index page
+- cardPost.jsx is next
