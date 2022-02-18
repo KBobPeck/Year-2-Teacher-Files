@@ -1,7 +1,7 @@
 import moment from "moment";
 import Moment from "react-moment";
 
-const calculateTime = createdAt => {
+const calculateTime = (createdAt) => {
   const today = moment(Date.now());
   const postDate = moment(createdAt);
   const diffInHours = today.diff(postDate, "hours");
@@ -9,13 +9,13 @@ const calculateTime = createdAt => {
   if (diffInHours < 24) {
     return (
       <>
-        Today <Moment format="hh:mm A">{createdAt}</Moment>
+        Today at <Moment format="hh:mm A">{createdAt}</Moment>
       </>
     );
   } else if (diffInHours > 24 && diffInHours < 36) {
     return (
       <>
-        Yesterday <Moment format="hh:mm A">{createdAt}</Moment>
+        Yesterday at <Moment format="hh:mm A">{createdAt}</Moment>
       </>
     );
   } else if (diffInHours > 36) {

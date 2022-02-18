@@ -27,7 +27,7 @@ const index = ({ user, postData, errorLoading }) => {
   return (
     <>
       <Segment>
-        {/* <CreatePost user={user} setPosts={setPosts} /> */}
+        <CreatePost user={user} setPosts={setPosts} />
         {posts.map((post) => (
           <CardPost
             key={post._id}

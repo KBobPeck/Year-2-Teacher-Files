@@ -186,3 +186,13 @@ since you should already have the get initial props on your \_app and you are re
 - same for no data in layout
 - then built out the index page
 - cardPost.jsx is next
+
+  - there is a lot in this, anything you find a thing that you need to make I would just create a small sample file for that thing
+  - the Popup is for deleting the post, it pops up with a warning
+  - There should only be 3 comments in the front, if you click to view the comment then there should be all of them
+
+- next is calctime.js in util
+- postComments.jsx
+- commentinput field
+- CreatePost
+- util/postActions
