@@ -193,6 +193,11 @@ since you should already have the get initial props on your \_app and you are re
 
 - next is calctime.js in util
 - postComments.jsx
-- commentinput field
 - CreatePost
 - util/postActions
+  - when you use the react-toastify in here just remember that you need to import the css to the \_app page
+- toastr.jsx which is where we create all the toastrs for the project.
+  - dont forget this part in the index
+- commentInputField.jsx
+
+_I did all these things kinda simultaniusly as I needed them but the above it kinda the order that I took to complete them_

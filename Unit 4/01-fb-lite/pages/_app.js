@@ -1,10 +1,11 @@
 import Layout from "./components/Layout/Layout";
-import "../styles/globals.css";
-import "semantic-ui-css/semantic.min.css";
 import { redirectUser } from "./util/authUser";
 import axios from "axios";
 import baseUrl from "./util/baseUrl";
 import { destroyCookie, parseCookies } from "nookies";
+import "../styles/globals.css";
+import "semantic-ui-css/semantic.min.css";
+import "react-toastify/dist/ReactToastify.css";
 
 // if you would like to see the appContext then you can do this and test it out
 // function MyApp(appContext) {
@@ -12,7 +13,7 @@ import { destroyCookie, parseCookies } from "nookies";
 function MyApp({ Component, pageProps }) {
   // Component is considered a children prop since it is inside of the component, that is why we need the children prop in layout
   return (
-    <Layout user = {pageProps.user}>
+    <Layout user={pageProps.user}>
       <Component {...pageProps} />
     </Layout>
   );

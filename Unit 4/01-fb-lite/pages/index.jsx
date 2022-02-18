@@ -8,6 +8,7 @@ import CardPost from "./components/Post/CardPost";
 import { Segment } from "semantic-ui-react";
 import { parseCookies } from "nookies";
 import { NoPosts } from "./components/Layout/NoData";
+import { PostDeleteToastr } from "./components/Layout/Toastr";
 
 //!the props are automatically added from the getInitialProps similar to the context file. You can add pageProps on the _app page, we did that for the user information
 const index = ({ user, postData, errorLoading }) => {
@@ -22,10 +23,15 @@ const index = ({ user, postData, errorLoading }) => {
     document.title = `Welcome, ${user.name.split(" ")[0]}`;
   }, []);
 
+  useEffect(() => {
+    showToastr && setTimeout(() => setShowToastr(false), 3000);
+  }, [showToastr]);
+
   if (posts.length === 0 || errorLoading) return <NoPosts />;
 
   return (
     <>
+      {showToastr && <PostDeleteToastr />}
       <Segment>
         <CreatePost user={user} setPosts={setPosts} />
         {posts.map((post) => (
