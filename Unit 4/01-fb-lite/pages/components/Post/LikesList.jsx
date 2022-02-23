@@ -15,7 +15,7 @@ function LikesList({ postId, trigger }) {
     setLoading(true);
     try {
       const res = await axios.get(`${baseUrl}/api/posts/like/${postId}`, {
-        headers: { Authorization: cookie.get("token") },
+        headers: { Authorization: `Bearer ${Cookies.get("token")}` },
       });
       setLikesList(res.data);
     } catch (error) {

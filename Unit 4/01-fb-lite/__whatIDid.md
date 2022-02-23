@@ -199,5 +199,8 @@ since you should already have the get initial props on your \_app and you are re
 - toastr.jsx which is where we create all the toastrs for the project.
   - dont forget this part in the index
 - commentInputField.jsx
+  - dont forget to update the postActions if you didn't finish it yet. you need the post and delete comment actions
+- likesList.jsx
+- ImageModal.jsx and NoImageModal.jsx
 
 _I did all these things kinda simultaniusly as I needed them but the above it kinda the order that I took to complete them_

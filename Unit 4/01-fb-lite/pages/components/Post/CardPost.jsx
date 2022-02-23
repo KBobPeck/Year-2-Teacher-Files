@@ -35,8 +35,8 @@ function CardPost({ post, user, setPosts, setShowToastr }) {
   const addPropsToModal = () => ({
     post,
     user,
-    setLikes,
     likes,
+    setLikes,
     isLiked,
     comments,
     setComments,
