@@ -191,16 +191,24 @@ since you should already have the get initial props on your \_app and you are re
   - the Popup is for deleting the post, it pops up with a warning
   - There should only be 3 comments in the front, if you click to view the comment then there should be all of them
 
+_I did all the things below kinda simultaniusly as I needed them but the above it kinda the order that I took to complete them_
+
 - next is calctime.js in util
 - postComments.jsx
-- CreatePost
+- likesList.jsx
 - util/postActions
   - when you use the react-toastify in here just remember that you need to import the css to the \_app page
+- CreatePost
 - toastr.jsx which is where we create all the toastrs for the project.
   - dont forget this part in the index
 - commentInputField.jsx
   - dont forget to update the postActions if you didn't finish it yet. you need the post and delete comment actions
-- likesList.jsx
 - ImageModal.jsx and NoImageModal.jsx
+  - if you havent yet, make sure that you add the modals to the cardpost
 
-_I did all these things kinda simultaniusly as I needed them but the above it kinda the order that I took to complete them_
+_END OF THINGS I DID SIMULTANIOUSLY_
+
+- adding infinite scrolling
+  - this is part of the index.jsx and I used the react-infinite-scroll-component library
+
+# Part 3 Profile Page

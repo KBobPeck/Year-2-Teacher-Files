@@ -22,9 +22,7 @@ import NoImageModal from "./NoImageModal";
 function CardPost({ post, user, setPosts, setShowToastr }) {
   const [likes, setLikes] = useState(post.likes);
 
-  const isLiked =
-    likes.length > 0 &&
-    likes.filter((like) => like.user === user._id).length > 0;
+  const isLiked = likes.filter((like) => like.user === user._id).length > 0;
 
   const [comments, setComments] = useState(post.comments);
 

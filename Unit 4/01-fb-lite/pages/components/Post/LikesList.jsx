@@ -3,7 +3,7 @@ import { List, Popup, Image } from "semantic-ui-react";
 import axios from "axios";
 import baseUrl from "../../util/baseUrl";
 import catchErrors from "../../util/catchErrors";
-import cookie from "js-cookie";
+import Cookies from "js-cookie";
 import Router from "next/router";
 import { LikesPlaceHolder } from "../Layout/PlaceHolderGroup";
 

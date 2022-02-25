@@ -9,6 +9,12 @@ import { Segment } from "semantic-ui-react";
 import { parseCookies } from "nookies";
 import { NoPosts } from "./components/Layout/NoData";
 import { PostDeleteToastr } from "./components/Layout/Toastr";
+import Cookies from "js-cookie";
+import InfiniteScroll from "react-infinite-scroll-component";
+import {
+  EndMessage,
+  PlaceHolderPosts,
+} from "./components/Layout/PlaceHolderGroup";
 
 //!the props are automatically added from the getInitialProps similar to the context file. You can add pageProps on the _app page, we did that for the user information
 const index = ({ user, postData, errorLoading }) => {
@@ -18,6 +24,8 @@ const index = ({ user, postData, errorLoading }) => {
   const [posts, setPosts] = useState(postData);
   //this is for react-toaster we will build that out later
   const [showToastr, setShowToastr] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [pageNumber, setPageNumber] = useState(2);
 
   useEffect(() => {
     document.title = `Welcome, ${user.name.split(" ")[0]}`;
@@ -27,22 +35,48 @@ const index = ({ user, postData, errorLoading }) => {
     showToastr && setTimeout(() => setShowToastr(false), 3000);
   }, [showToastr]);
 
-  if (posts.length === 0 || errorLoading) return <NoPosts />;
+  const fetchDataOnScroll = async () => {
+    try {
+      const res = await axios.get(`${baseUrl}/api/posts`, {
+        headers: { Authorization: Cookies.get("token") },
+        params: { pageNumber },
+      });
+
+      if (res.data.length === 0) setHasMore(false);
+
+      setPosts((prev) => [...prev, ...res.data]);
+      setPageNumber((prev) => prev + 1);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
       {showToastr && <PostDeleteToastr />}
       <Segment>
         <CreatePost user={user} setPosts={setPosts} />
-        {posts.map((post) => (
-          <CardPost
-            key={post._id}
-            post={post}
-            user={user}
-            setPosts={setPosts}
-            setShowToastr={setShowToastr}
-          />
-        ))}
+        {posts.length === 0 || errorLoading ? (
+          <NoPosts />
+        ) : (
+          <InfiniteScroll
+            hasMore={hasMore}
+            next={fetchDataOnScroll}
+            loader={<PlaceHolderPosts />}
+            endMessage={<EndMessage />}
+            dataLength={posts.length}
+          >
+            {posts.map((post) => (
+              <CardPost
+                key={post._id}
+                post={post}
+                user={user}
+                setPosts={setPosts}
+                setShowToastr={setShowToastr}
+              />
+            ))}
+          </InfiniteScroll>
+        )}
       </Segment>
     </>
   );
@@ -55,6 +89,7 @@ index.getInitialProps = async (ctx) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      params: { pageNumber: 1 },
     });
     // console.log(res.data);
     return { postData: res.data };
