@@ -212,3 +212,23 @@ _END OF THINGS I DID SIMULTANIOUSLY_
   - this is part of the index.jsx and I used the react-infinite-scroll-component library
 
 # Part 3 Profile Page
+
+- controller for profile
+  - the router and the server setup for the controller too
+- [username].js
+
+  - if you look up dynamic pages then you can see the next.js documentation you can see how this works.
+  - dont forget to add this route to the protected routes array in the \_app.js
+
+- you need to do a bunch of components for this too
+  - NoProfilePosts, NoProfile
+  - CardPost
+  - PlaceholderPosts
+  - ProfileMenuTabs
+  - ProfileHeader
+  - Followers
+  - Following
+  - UpdateProfile
+  - Settings
+
+_honestly there isnt much new stuff here just more work_

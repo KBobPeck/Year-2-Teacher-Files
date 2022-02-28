@@ -1,7 +1,7 @@
 //* EXPRESS APP SETUP
 const express = require("express");
 const { connectDB } = require("./server/util/connect");
-const cloudinary = require('cloudinary').v2
+const cloudinary = require("cloudinary").v2;
 require("dotenv").config();
 
 require("dotenv").config();
@@ -25,19 +25,20 @@ const nextApp = next({ dev });
 const handler = nextApp.getRequestHandler();
 
 //* MIDDLEWARES
-const fileUpload = require('express-fileupload')
+const fileUpload = require("express-fileupload");
 
 app.use(express.json());
-app.use(fileUpload({useTempFiles: true}))
+app.use(fileUpload({ useTempFiles: true }));
 
-const authMiddleware = require('./server/middleware/authMiddleware')
+const authMiddleware = require("./server/middleware/authMiddleware");
 
 //*ROUTERS
-const userRoutes = require('./server/routes/userRoutes')
-const authRoutes = require('./server/routes/authRoutes')
-const uploadRoutes = require('./server/routes/uploadRoutes')
-const searchRoutes = require('./server/routes/search')
-const postRoutes = require('./server/routes/posts')
+const userRoutes = require("./server/routes/userRoutes");
+const authRoutes = require("./server/routes/authRoutes");
+const uploadRoutes = require("./server/routes/uploadRoutes");
+const searchRoutes = require("./server/routes/search");
+const postRoutes = require("./server/routes/posts");
+const profileRoutes = require("./server/routes/profile");
 
 //? alternative way to route if you prefer
 // app.use("/api/v1/user", require('./server/routes/userRoutes'));
@@ -45,7 +46,8 @@ app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/uploads", uploadRoutes);
 app.use("/api/v1/search", searchRoutes);
-app.use("/api/v1/posts",authMiddleware, postRoutes);
+app.use("/api/v1/posts", authMiddleware, postRoutes);
+app.use("/api/v1/profile", authMiddleware, profileRoutes);
 
 connectDB();
 
