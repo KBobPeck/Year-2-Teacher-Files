@@ -213,21 +213,6 @@ _END OF THINGS I DID SIMULTANIOUSLY_
 
 # Part 3 Profile Page
 
-<<<<<<< HEAD
-- controllers/profile.js
-  - this includes the router and the server setup for the new api routes
-- [username].js page, this is a thing in nextjs that will render a dynamic page, we can feed in any username for this and that will name a page for that person. 
-- here I just went and did each part required as a went through that page. there were some profile actions in the util, a bunch of 
-
-
-# I skipped a lot here, there was just too much to do 3 weeks was enough for this and it felt like a lot of what we were doing was the same thing over and over
-# instead I skipped ahead to messaging since it was a cool new thing that we didnt do before
-
-- chat model.js
-- add ChatModel to the user signup so that when the user is created they will have a chat model made for them
-- add a small piece to the auth part 
- 
-=======
 - controller for profile
   - the router and the server setup for the controller too
 - [username].js
@@ -247,4 +232,11 @@ _END OF THINGS I DID SIMULTANIOUSLY_
   - Settings
 
 _honestly there isnt much new stuff here just more work_
->>>>>>> c32a8c6f88211f84ab3cb1d980f179b23c80ce85
+
+# I skipped a lot here, there was just too much to do 3 weeks was enough for this and it felt like a lot of what we were doing was the same thing over and over
+# instead I skipped ahead to messaging since it was a cool new thing that we didnt do before
+
+- chat model.js
+- add ChatModel to the user signup so that when the user is created they will have a chat model made for them
+- add a small piece to the user.js part in the login, so that when a user logs in we see if they have a chat model, if they dont then we need up add it 
+ 

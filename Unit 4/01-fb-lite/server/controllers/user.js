@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const isEmail = require("validator/lib/isEmail");
 const URL = require("../util/defaultProfilePic");
+const ChatModel = require("../models/ChatModel");
 
 const regexUsername = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
 
@@ -53,6 +54,14 @@ const postLoginAuth = async (req, res) => {
     const isPassword = await bcrypt.compare(password, user.password);
     if (!isPassword) {
       return res.status(401).send("Invalid Credentials");
+    }
+
+    //this is the chat model
+    const chatModel = await ChatModel.findOne({user: user._id})
+
+    
+    if(!chatModel){
+      await new ChatModel({user:user._id}).save()
     }
 
     const payload = { userId: user._id };
