@@ -16,7 +16,6 @@ import ImageDropDiv from "./components/Common/ImageDropDiv";
 import axios from "axios";
 import { setToken } from "./util/authUser";
 import catchErrors from "./util/catchErrors";
-import { checkToken } from "./util/authUser";
 
 let cancel;
 

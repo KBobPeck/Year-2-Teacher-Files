@@ -213,6 +213,7 @@ _END OF THINGS I DID SIMULTANIOUSLY_
 
 # Part 3 Profile Page
 
+<<<<<<< HEAD
 - controllers/profile.js
   - this includes the router and the server setup for the new api routes
 - [username].js page, this is a thing in nextjs that will render a dynamic page, we can feed in any username for this and that will name a page for that person. 
@@ -226,3 +227,24 @@ _END OF THINGS I DID SIMULTANIOUSLY_
 - add ChatModel to the user signup so that when the user is created they will have a chat model made for them
 - add a small piece to the auth part 
  
+=======
+- controller for profile
+  - the router and the server setup for the controller too
+- [username].js
+
+  - if you look up dynamic pages then you can see the next.js documentation you can see how this works.
+  - dont forget to add this route to the protected routes array in the \_app.js
+
+- you need to do a bunch of components for this too
+  - NoProfilePosts, NoProfile
+  - CardPost
+  - PlaceholderPosts
+  - ProfileMenuTabs
+  - ProfileHeader
+  - Followers
+  - Following
+  - UpdateProfile
+  - Settings
+
+_honestly there isnt much new stuff here just more work_
+>>>>>>> c32a8c6f88211f84ab3cb1d980f179b23c80ce85
