@@ -19,8 +19,8 @@ export const NoProfilePosts = () => (
 
 export const NoFollowData = ({
   profileName,
-  followersComponent = true,
-  followingComponent = true,
+  followersComponent = false,
+  followingComponent = false,
 }) => (
   <>
     {followersComponent && (

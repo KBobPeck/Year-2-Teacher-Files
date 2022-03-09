@@ -234,9 +234,14 @@ _END OF THINGS I DID SIMULTANIOUSLY_
 _honestly there isnt much new stuff here just more work_
 
 # I skipped a lot here, there was just too much to do 3 weeks was enough for this and it felt like a lot of what we were doing was the same thing over and over
+
 # instead I skipped ahead to messaging since it was a cool new thing that we didnt do before
 
 - chat model.js
 - add ChatModel to the user signup so that when the user is created they will have a chat model made for them
-- add a small piece to the user.js part in the login, so that when a user logs in we see if they have a chat model, if they dont then we need up add it 
- 
+- add a small piece to the user.js part in the login, so that when a user logs in we see if they have a chat model, if they dont then we need up add it
+- set up the chat and message components I skipped the socket.io stuff at first and just got a working start
+- next we build out the messages page and the components for that.
+  - this is also where the socket.io will be. this takes some bouncing back and forth from the server.js
+  - you need to install socket.io and socket.io-client and then you can import them in the corresponding places.
+  - don't forget to show off the [socket.io_cheatsheet](https://socket.io/docs/v3/emit-cheatsheet/)
