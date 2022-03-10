@@ -17,12 +17,9 @@ const SocketHandler = (req, res) => {
         const user = users.find((user) => user.userId === userId);
 
         if (!user) users.push({ userId });
+        console.log('test2', users);
 
-        setInterval(() => {
-          socket.emit("connectedUsers", {
-            users: users.filter((user) => user.userId !== userId),
-          });
-        }, 60000);
+        socket.emit("connectedUsers", {users})
       });
 
       socket.on("sendNewMsg", async ({ userId, msgSendToUserId, msg }) => {
@@ -82,9 +79,45 @@ const SocketHandler = (req, res) => {
             }
           }
           socket.emit("msgSent", { newMsg });
+
+          
         } catch (error) {
           console.log(error);
         }
+      });
+    
+      socket.on("disconnect", () => removeUser(socket.id));
+
+      socket.on("deleteMsg", async ({ userId, messagesWith, messageId }) => {
+        // const { success } = await deleteMsg(userId, messagesWith, messageId);
+
+        const user = await ChatModel.findOne({ user: userId });
+
+        const chat = user.chats.find(
+          (chat) => chat.messagesWith.toString() === messagesWith
+        );
+    
+        if (!chat) return;
+    
+        const messageToDelete = chat.messages.find(
+          (message) => message._id.toString() === messageId
+        );
+    
+        if (!messageToDelete) return;
+    
+        if (messageToDelete.sender.toString() !== userId) {
+          return;
+        }
+    
+        const indexOf = chat.messages
+          .map((message) => message._id.toString())
+          .indexOf(messageToDelete._id.toString());
+    
+        await chat.messages.splice(indexOf, 1);
+    
+        await user.save();
+    
+        socket.emit("msgDeleted");
       });
 
       socket.on("loadMessages", async ({ userId, messagesWith }) => {

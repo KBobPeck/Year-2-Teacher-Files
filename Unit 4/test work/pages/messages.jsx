@@ -34,15 +34,16 @@ const messages = ({ chatsData, user }) => {
       await fetch("/api/socket");
       socket.current = io();
 
+      socket.current.emit("join", { userId: user._id });
+
       socket.current.on("connect", () => {
         console.log("connected");
       });
 
       socket.current.on("connectedUsers", ({ users }) => {
-        user.length > 0 && setConnectedUsers(users);
+        console.log("test1", users);
+        users.length > 0 && setConnectedUsers(users);
       });
-
-      socket.current.emit("join", { userId: user._id });
     };
     startServer();
   }, []);
@@ -84,6 +85,99 @@ const messages = ({ chatsData, user }) => {
     };
     if (socket.current && router.query.message) loadMessages();
   }, [router.query.message]);
+
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on("msgSent", ({ newMsg }) => {
+        if (newMsg.receiver === openChatId.current) {
+          setMessages((prev) => [...prev, newMsg]);
+
+          setChats((prev) => {
+            const previousChat = prev.find(
+              (chat) => chat.messagesWith === newMsg.receiver
+            );
+            previousChat.lastMessage = newMsg.msg;
+            previousChat.date = newMsg.date;
+
+            return [...prev];
+          });
+        }
+      });
+
+      socket.current.on("newMsgReceived", async ({ newMsg }) => {
+        let senderName;
+
+        // WHEN CHAT WITH SENDER IS CURRENTLY OPENED INSIDE YOUR BROWSER
+        if (newMsg.sender === openChatId.current) {
+          setMessages((prev) => [...prev, newMsg]);
+
+          setChats((prev) => {
+            const previousChat = prev.find(
+              (chat) => chat.messagesWith === newMsg.sender
+            );
+            previousChat.lastMessage = newMsg.msg;
+            previousChat.date = newMsg.date;
+
+            senderName = previousChat.name;
+
+            return [...prev];
+          });
+        }
+        //
+        else {
+          const ifPreviouslyMessaged =
+            chats.filter((chat) => chat.messagesWith === newMsg.sender).length >
+            0;
+
+          if (ifPreviouslyMessaged) {
+            setChats((prev) => {
+              const previousChat = prev.find(
+                (chat) => chat.messagesWith === newMsg.sender
+              );
+              previousChat.lastMessage = newMsg.msg;
+              previousChat.date = newMsg.date;
+
+              senderName = previousChat.name;
+
+              return [
+                previousChat,
+                ...prev.filter((chat) => chat.messagesWith !== newMsg.sender),
+              ];
+            });
+          }
+
+          //IF NO PREVIOUS CHAT WITH THE SENDER
+          else {
+            const res = await axios.get(
+              `${baseURL}/api/v1/messages/user/${userToFindId}`,
+              {
+                headers: { Authorization: `Bearer ${Cookies.get("token")}` },
+              }
+            );
+
+            const { name, profilePicUrl } = res.data;
+
+            senderName = name;
+
+            const newChat = {
+              messagesWith: newMsg.sender,
+              name,
+              profilePicUrl,
+              lastMessage: newMsg.msg,
+              date: newMsg.date,
+            };
+            setChats((prev) => [newChat, ...prev]);
+          }
+        }
+
+        newMsgSound(senderName);
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    messages.length > 0 && scrollDivToBottom(divRef);
+  }, [messages]);
 
   const deleteChat = async (messagesWith) => {
     try {

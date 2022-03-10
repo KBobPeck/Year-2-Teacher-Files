@@ -10,7 +10,7 @@ const Message = ({ message, user, deleteMsg, bannerProfilePic, divRef }) => {
     <div className="bubbleWrapper" ref={divRef}>
       <div
         className={ifSender ? "inlineContainer own" : "inlineContainer"}
-        onClick={() => ifSender && setShowDeleteIcon(!deleteIcon)}
+        onClick={() => ifSender && setShowDeleteIcon(!showDeleteIcon)}
       >
         <img
           className="inlineIcon"
@@ -20,7 +20,7 @@ const Message = ({ message, user, deleteMsg, bannerProfilePic, divRef }) => {
         <div className={ifSender ? "ownBubble own" : "otherBubble other"}>
           {message.msg}
         </div>
-        {deleteIcon && (
+        {showDeleteIcon && (
           <Popup
             triggerRef={
               <Icon
