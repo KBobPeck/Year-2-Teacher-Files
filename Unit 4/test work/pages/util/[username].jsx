@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { baseURL } from "./util/baseURL";
+import { baseURL } from "./baseURL";
 import { parseCookies } from "nookies";
 import Cookies from "js-cookie";
-import CardPost from "./components/post/CardPost";
+import CardPost from "../components/post/CardPost";
 import { Grid } from "semantic-ui-react";
-import ProfileMenuTabs from "./components/profile/ProfileMenuTabs";
-import ProfileHeader from "./components/profile/ProfileHeader";
-import { NoProfilePosts } from "./components/layout/NoData";
-import { PlaceHolderPosts } from "./components/layout/PlaceHolderGroup";
-import Followers from "./components/profile/Followers";
-import Following from "./components/profile/following";
+import ProfileMenuTabs from "../components/profile/ProfileMenuTabs";
+import ProfileHeader from "../components/profile/ProfileHeader";
+import { NoProfilePosts } from "../components/layout/NoData";
+import { PlaceHolderPosts } from "../components/layout/PlaceHolderGroup";
+import Followers from "../components/profile/Followers";
+import Following from "../components/profile/following";
 
 const ProfilePage = ({
   errorLoading,
